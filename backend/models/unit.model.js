@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Unit = sequelize.define("units", {
         unitfleet: {
-            type: Sequelize.NUMBER,
+            type: Sequelize.INTEGER,
             allowNull: false
         },          
         typefleet: {

@@ -1,0 +1,27 @@
+erDiagram
+    %% ENTIDADES
+    UNIT {
+        INTEGER id PK
+        INTEGER unitfleet "Número de unidad"
+    }
+    EMPLOYEE {
+        INTEGER id PK
+        STRING dni "DNI"
+    }
+    DOTA {
+        INTEGER id PK
+        INTEGER unitfleet FK
+        INTEGER driveId FK
+        INTEGER sanitId FK
+        INTEGER facultId FK
+    }
+
+    %% RELACIONES
+    
+    %% Relación UNIT <-> DOTA (1:1/1:0)
+    UNIT ||--o{ DOTA : "tiene asignada"
+    
+    %% Relaciones EMPLOYEE <-> DOTA (Múltiples 1:N/1:0)
+    EMPLOYEE ||--o{ DOTA : "es Conductor en"
+    EMPLOYEE ||--o{ DOTA : "es Sanitario en"
+    EMPLOYEE ||--o{ DOTA : "es Médico en"
