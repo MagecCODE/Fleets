@@ -23,8 +23,12 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-/*
-db.tasks = require('./task.model.js')(sequelize, Sequelize);
-db.user = require('./user.model.js')(sequelize, Sequelize);
-*/
+
+db.tasks = require('./unit.model.js')(sequelize, Sequelize);
+db.user = require('./dota.model.js')(sequelize, Sequelize);
+db.tasks = require('./employee.model.js')(sequelize, Sequelize);
+db.user = require('./incidence.model.js')(sequelize, Sequelize);
+db.tasks = require('./inventory.model.js')(sequelize, Sequelize);
+
+
 module.exports = db;
