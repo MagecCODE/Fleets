@@ -28,20 +28,20 @@ module.exports = (sequelize, Sequelize) => {
         },
         prof: {
             type: Sequelize.ENUM(
-                "FACULTATIVO",
-                "ENFERMERO", 
-                "SANITARIO"
+                "Facultativo",
+                "Enfermero", 
+                "Técnico en Emergencias Sanitarias",
             ),
-            defaultValue: "SANITARIO"
+            defaultValue: "Técnico en Emergencias Sanitarias"
         }, 
         rol: {
             type: Sequelize.ENUM(
-                "ADMIN", 
-                "LOGISTIC", 
-                "MRO", 
-                "SANITARY"
+                "Admin", 
+                "Logistics", 
+                "Mro", 
+                "Sanitary"
             ),
-            defaultValue: "SANITARY"
+            defaultValue: "Sanitary"
         }, 
         filename:{
             type: Sequelize.STRING,

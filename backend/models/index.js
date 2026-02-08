@@ -24,11 +24,10 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tasks = require('./unit.model.js')(sequelize, Sequelize);
-db.user = require('./dota.model.js')(sequelize, Sequelize);
-db.tasks = require('./employee.model.js')(sequelize, Sequelize);
-db.user = require('./incidence.model.js')(sequelize, Sequelize);
-db.tasks = require('./inventory.model.js')(sequelize, Sequelize);
-
+db.unit = require('./unit.model.js')(sequelize, Sequelize);
+db.dota = require('./dota.model.js')(sequelize, Sequelize);
+db.employee = require('./employee.model.js')(sequelize, Sequelize);
+db.incidence = require('./incidence.model.js')(sequelize, Sequelize);
+db.inventory = require('./inventory.model.js')(sequelize, Sequelize);
 
 module.exports = db;

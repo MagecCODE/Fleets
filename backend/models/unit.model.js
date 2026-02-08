@@ -6,12 +6,12 @@ module.exports = (sequelize, Sequelize) => {
         },          
         typefleet: {
             type: Sequelize.ENUM(
-                "MEDICALIZADA", 
-                "SANITARIZADA", 
-                "SOPORTE VITAL BÁSICO", 
-                "NO URGENTE"
+                "Medicalizada", 
+                "Sanitizada", 
+                "Soporte Vital Básico", 
+                "No Urgente"
             ),
-            defaultValue: "SOPORTE VITAL BÁSICO",
+            defaultValue: "Soporte Vital Básico",
             allowNull: false
         }, 
     });

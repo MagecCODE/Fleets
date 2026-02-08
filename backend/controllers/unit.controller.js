@@ -22,7 +22,7 @@ exports.create = (req, res) => {
             return res.send(data);
         })
         .catch(err => {
-            console.error("[ERROR]",err);
+            console.error("[ERROR] en el método create del controlador de Unit:", err);
             return res.status(500).send({                
             message:
                 err.message || "Some error occurred while creating the Unit."
@@ -36,7 +36,7 @@ exports.findAll = async(req, res) => {
         const unit = await Unit.findAll();  
         res.json(unit);
     } catch (err) {
-        console.error("[ERROR] - en método findAll",err);
+        console.error("[ERROR] en el método findAll del controlador de Unit:", err);
         res.status(500).send({
             message:
                 err.message || "Some error occurred while retrieving units."
@@ -59,7 +59,7 @@ exports.findOne = (req, res) => {
             };
         })
         .catch(err => {
-            console.error("[ERROR] - en método findOne",err);
+            console.error("[ERROR] en el método findOne del controlador de Unit:", err);
             return res.status(500).send({
                 message: "Error retrieving Unit with id=" + id
             });
@@ -85,7 +85,7 @@ exports.update = (req, res) => {
         }
     })
     .catch(err => {
-        console.error("[ERROR] - en método update",err);
+        console.error("[ERROR] en el método update del controlador de Unit:", err);
         return res.status(500).send({
             message: "Error updating Unit with id=" + id
         });
@@ -110,27 +110,10 @@ exports.delete = (req, res) => {
         }
     })
     .catch(err => {
-        console.error("[ERROR] - en método delete",err);
+        console.error("[ERROR] en el método delete del controlador de Unit:", err);
         return res.status(500).send({
             message: "Could not delete Unit with id=" + id
         });
     }); 
 };
 
-// Delete all Units from the database.
-exports.deleteAll = (req, res) => {
-    Unit.destroy({
-        where: {},
-        truncate: false
-    })
-    .then(nums => {
-        return res.send({ message: `${nums} Units were deleted successfully!` });
-    })
-    .catch(err => {
-        console.error("[ERROR] - en método deleteAll",err);
-        return res.status(500).send({   
-            message:
-                err.message || "Some error occurred while removing all units."
-        });
-    });
-};

@@ -15,11 +15,11 @@ module.exports = (sequelize, Sequelize) => {
         },
         incidence_type:{
             type: Sequelize.ENUM(
-                "MECÁNICA",
-                "MATERIAL",
-                "PACIENTE",
-                "SERVICIO",
-                "OTRO" 
+                "Mecánica",
+                "Material",
+                "Paciente",
+                "Servicio",
+                "Otro" 
             ),
             allowNull: false
         },
@@ -33,9 +33,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         status:{
             type: Sequelize.ENUM(
-                "PENDIENTE",
-                "EN PROCESO",
-                "RESUELTA"
+                "Pendiente",
+                "En proceso",
+                "Resuelta"
             ),
             allowNull: false
         }

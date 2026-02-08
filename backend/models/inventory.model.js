@@ -23,8 +23,8 @@ module.exports = (sequelize, Sequelize) => {
         },
         status:{
             type: Sequelize.ENUM(
-                "STOCK",
-                "STOCK OUT"
+                "Stock",
+                "Stock Out"
             ),
             allowNull: false
         }
