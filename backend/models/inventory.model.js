@@ -1,3 +1,5 @@
+const {INVENTORY_STATUS} = require("../constants/roles");
+
 module.exports = (sequelize, Sequelize) => {
     const Inventory = sequelize.define("inventories", {
         unitfleet:{
@@ -22,10 +24,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false    
         },
         status:{
-            type: Sequelize.ENUM(
-                "Stock",
-                "Stock Out"
-            ),
+            type: Sequelize.ENUM(...Object.values(INVENTORY_STATUS)),
             allowNull: false
         }
     });

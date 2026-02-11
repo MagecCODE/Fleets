@@ -1,3 +1,5 @@
+const {ROLES, PROFESSIONS} = require("../constants/roles");
+
 module.exports = (sequelize, Sequelize) => {
     const Employee = sequelize.define("employees", {
         
@@ -27,21 +29,12 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         prof: {
-            type: Sequelize.ENUM(
-                "Facultativo",
-                "Enfermero", 
-                "Técnico en Emergencias Sanitarias",
-            ),
-            defaultValue: "Técnico en Emergencias Sanitarias"
+            type: Sequelize.ENUM(...Object.values(PROFESSIONS)),
+            defaultValue: PROFESSIONS.TECNICO_EMERGENCIAS_SANITARIAS
         }, 
         rol: {
-            type: Sequelize.ENUM(
-                "Admin", 
-                "Logistics", 
-                "Mro", 
-                "Sanitary"
-            ),
-            defaultValue: "Sanitary"
+            type: Sequelize.ENUM(...Object.values(ROLES)),
+            defaultValue: ROLES.SANITARY
         }, 
         filename:{
             type: Sequelize.STRING,

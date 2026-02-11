@@ -45,7 +45,7 @@ module.exports = (sequelize, Sequelize) => {
         // 4. La Dotación pertenece a un Empleado (el Médico)
         Dota.belongsTo(models.Employee, {
             foreignKey: 'facultId',
-            as: 'Medico'
+            as: 'Facultativo'
         });
     };
     return Dota;

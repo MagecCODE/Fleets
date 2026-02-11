@@ -1,3 +1,5 @@
+const {UNIT_TYPES} = require("../constants/roles");
+
 module.exports = (sequelize, Sequelize) => {
     const Unit = sequelize.define("units", {
         unitfleet: {
@@ -5,13 +7,8 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },          
         typefleet: {
-            type: Sequelize.ENUM(
-                "Medicalizada", 
-                "Sanitizada", 
-                "Soporte Vital Básico", 
-                "No Urgente"
-            ),
-            defaultValue: "Soporte Vital Básico",
+            type: Sequelize.ENUM(...Object.values(UNIT_TYPES)),
+            defaultValue: UNIT_TYPES.SOPORTE_VITAL_BASICO,
             allowNull: false
         }, 
     });

@@ -1,19 +1,23 @@
+require('dotenv').config();
+
 module.exports = app =>{
     const employees= require("../controllers/employee.controller.js");
     let router = require("express").Router();
+    const API= process.env.API_URL;
+    const EMPLOYEES_URL = API + process.env.EMPLOYEES_ROUTE;
 
     // Create a new Employee
-    router.post("/", employees.create);
+    router.post(EMPLOYEES_URL, employees.create);
     // Retrieve all Employees
-    router.get("/", employees.findAll);     
+    router.get(EMPLOYEES_URL, employees.findAll);     
     // Retrieve a single Employee with id
     router.get("/:id", employees.findOne);
     // Retrieve a single Employee with dni
-    router.get("/dni/:dni", employees.findByDni);
+    router.get(EMPLOYEES_URL + "/dni/:dni", employees.findByDni);
     // Retrieve a single Employee with prof
-    router.get("/prof/:prof", employees.findByProf);
+    router.get(EMPLOYEES_URL + "/prof/:prof", employees.findByProf);
     // Update a Employee with id
     router.put("/:id", employees.update);   
     // Delete a Employee with id
-    router.delete("/:id", employees.delete);
+    router.delete(EMPLOYEES_URL + "/:id", employees.delete);
 };

@@ -4,7 +4,7 @@ const Dota = db.dotas;
 const Unit = db.units;
 const Employee = db.employees;
 const Op = db.Sequelize.Op;
-const {PROFESSIONS} = require("../constant/roles");
+const {PROFESSIONS} = require("../constants/roles");
 
 // Create and Save a new Dota
 exports.create = async (req, res) => {

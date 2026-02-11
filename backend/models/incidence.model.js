@@ -1,3 +1,5 @@
+const {INCIDENCE_TYPES, INCIDENCE_STATUS} = require("../constants/roles");
+
 module.exports = (sequelize, Sequelize) => {
     const Incidence = sequelize.define("incidencies", {
         unitfleet:{
@@ -14,13 +16,7 @@ module.exports = (sequelize, Sequelize) => {
             },
         },
         incidence_type:{
-            type: Sequelize.ENUM(
-                "Mecánica",
-                "Material",
-                "Paciente",
-                "Servicio",
-                "Otro" 
-            ),
+            type: Sequelize.ENUM(...Object.values(INCIDENCE_TYPES)),
             allowNull: false
         },
         description:{
@@ -32,11 +28,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         status:{
-            type: Sequelize.ENUM(
-                "Pendiente",
-                "En proceso",
-                "Resuelta"
-            ),
+            type: Sequelize.ENUM(...Object.values(INCIDENCE_STATUS)),
             allowNull: false
         }
     });
