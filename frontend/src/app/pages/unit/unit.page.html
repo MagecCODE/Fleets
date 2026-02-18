@@ -1,0 +1,119 @@
+<!-- Bloque de dotación de la ambulancia -->
+<ion-content>
+  <div class="dot-container">
+    <ion-grid class="dot-grid">
+      <ion-text id="header-text"> UNIDAD 101 </ion-text>
+      <div>
+        <ion-row>
+          <!-- Tarjetas para mostrar la dotación de la ambulancia -->
+          @for (employee of employees; track employee.dni) {
+          <ion-col>
+            <ion-card class="dot-grid__card-employee">
+              <ion-item class="as">
+                <!-- Muestra la foto del empleado -->
+                <ion-avatar>
+                  <img
+                    alt="Foto del empleado"
+                    src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                  />
+                </ion-avatar>
+                <!-- Muestra el nombre y apellidos -->
+                <ion-card-header>
+                  <ion-card-title>{{ employee.name }}</ion-card-title>
+                  <ion-card-subtitle>{{ employee.surname }}</ion-card-subtitle>
+                </ion-card-header>
+              </ion-item>
+              <!-- Muestra el resto de los datos que se quieran mostrar -->
+              <ion-card-content>
+                <ion-item>
+                  <ion-text><span style="font-weight: 700;">Teléfono: </span>{{ employee.phone }}</ion-text>
+                </ion-item>
+              </ion-card-content>
+              <!-- Muestra el puesto que ocupa dentro de la dotación -->
+              @if (employee.rol == "DRIVER") {
+              <ion-chip> Conductor </ion-chip>
+              } @if (employee.rol == "SANITARY") {
+              <ion-chip> Técnico Sanitario </ion-chip>
+              } @if (employee.rol == "FACULTATIVE") {
+              <ion-chip> Facultativo </ion-chip>
+              }
+            </ion-card>
+          </ion-col>
+          }
+        </ion-row>
+      </div>
+
+      <div>
+        <!-- Bloque de inventario de la ambulancia -->
+        <ion-text class="dot-grid__title">Inventario</ion-text>
+        @for (product of products; track product.id) {
+        <!-- Este condicional oculta los productos de los que hay suficiente stock -->
+        @if (product.status == 'LOW_STOCK') {
+        <ion-card class="dot-grid__card-inventory">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <!-- La primera fila muestra la cabecera de la tarjeta -->
+                <ion-row>
+                  <ion-col>
+                    ARTÍCULO
+                  </ion-col>
+                  <ion-col>
+                    CANTIDAD
+                  </ion-col>
+                  <ion-col>
+                    ESTADO
+                  </ion-col>
+                </ion-row>
+                <!-- Esta segunda fila muestra los datos del inventario -->
+                <ion-row class="dot-grid__card-inventory__second-row">
+                  <ion-col>
+                    {{ product.item_name }}
+                  </ion-col>
+                  <ion-col>
+                    {{ product.quantity }}
+                  </ion-col>
+                  <ion-col>
+                    {{ product.status }}
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <!-- Esta columna es para el botón de solicitud -->
+              <ion-col size="2">
+                <ion-button id="request-button"> Solicitar </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+        } }
+      </div>
+
+      <div>
+        <!-- Bloque de incidentes relacionandos con la ambulancia -->
+        <ion-text class="dot-grid__title">Incidentes</ion-text>
+        <!-- Tabla para mostrar los incidentes.
+         Este primer bloque es la cabecera de la tabla -->
+        <ion-grid class="dot-grid__table">
+          <ion-row id="header-table">
+            <ion-col size="1.5"><p>TIPO</p></ion-col>
+            <ion-col size="6"><p>DESCRIPCIÓN</p></ion-col>
+            <ion-col><p>FECHA APERTURA</p></ion-col>
+            <ion-col><p>ESTADO</p></ion-col>
+          </ion-row>
+        </ion-grid>
+        <!-- Este segundo bloque muestra los datos en la tabla -->
+        <ion-grid class="dot-grid__table">
+          @for (incident of incidence; track incident.id) {
+          <ion-row id="table-row">
+            <ion-col size="1.5"><p>{{ incident.incidence_type }}</p></ion-col>
+            <ion-col size="6"><p>{{ incident.description }}</p></ion-col>
+            <ion-col><p>{{ incident.date }}</p></ion-col>
+            <ion-col><p>{{ incident.status }}</p></ion-col>
+          </ion-row>
+          }
+        </ion-grid>
+        <ion-button id="incidence-button"> Nueva incidencia </ion-button>
+      </div>
+    </ion-grid>
+  </div>
+</ion-content>

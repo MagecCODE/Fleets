@@ -1,0 +1,163 @@
+// Fondo principal de la página
+.dot-container {
+  background: linear-gradient(
+    60deg,
+    var(--ion-blue-text),
+    var(--ion-blue-subtext)
+  );
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 600px;
+  color: var(--ion-blue-text);
+  padding: 20px 0px 0px 0px;
+}
+
+.dot-grid {
+  width: 100%;
+  max-width: 1200px;
+  min-width: 600px;
+
+  #header-text {
+    display: block;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--ion-blue-background);
+    padding: 0px 0px 15px 10px;
+  }
+}
+
+// Títulos de sección
+.dot-grid__title {
+  display: block;
+  color: var(--ion-blue-background);
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 20px 0 10px 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+// Tarjetas de los empleados
+.dot-grid__card-employee {
+  background: var(--ion-blue-background);
+  border-radius: 15px;
+  box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
+  margin: 0px 0px 10px 0px;
+  padding: 8px 0px 0px 0px;
+  text-align: center;
+  text-transform: capitalize;
+
+  ion-avatar {
+    --border-radius: 10%;
+    width: 100px;
+    height: auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  ion-card-title {
+    color: var(--ion-blue-text);
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  ion-card-subtitle {
+    color: var(--ion-blue-text);
+    font-weight: 300;
+    font-size: 1.1rem;
+  }
+
+  ion-item {
+    --background: transparent;
+    --border-color: transparent;
+    padding: 0px;
+  }
+
+  ion-chip {
+    background: var(--ion-blue-highlight);
+    color: var(--ion-blue-text);
+    font-size: 1rem;
+    font-weight: 300;
+    margin: 10px 0px 15px 0px;
+  }
+}
+
+// Tarjeta de inventario
+.dot-grid__card-inventory {
+  display: flex;
+  background: var(--ion-blue-background);
+  border-radius: 15px;
+  box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
+  margin: 0px 4px 35px 4px;
+  padding: px 40px 0px 8px;
+  text-align: left;
+  text-transform: capitalize;
+
+  ion-col {
+    display: flexbox;
+    font-weight: 700;
+    color: var(--ion-blue-text);
+    text-transform: capitalize;
+    font-size: 1rem;
+  }
+
+  // Botón "Solicitar"
+  #request-button {
+    --background: var(--ion-red-action);
+    --border-radius: 12px;
+    --color: var(--ion-blue-background);
+    --box-shadow: none;
+    margin: 14px 0px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 45px;
+    min-width: 130px;
+  }
+}
+
+.dot-grid__card-inventory__second-row {
+  padding: 15px 0px 5px 0px;
+
+  ion-col {
+    font-weight: 300;
+    color: var(--ion-blue-text);
+    text-transform: capitalize;
+    font-size: 1rem;
+  }
+}
+
+// Cabecera de la tabla
+#header-table,
+#table-row {
+  color: var(--ion-blue-background);
+}
+
+// Estilo para la "Tabla" de Incidentes
+.dot-grid__table {
+  border-radius: 15px;
+
+  ion-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    align-items: center;
+  }
+}
+
+// Botón "Nueva incidencia"
+#incidence-button {
+  --background: var(--ion-red-action);
+  --border-radius: 12px;
+  --color: var(--ion-blue-background);
+  --box-shadow: none;
+  display: flex;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  height: 45px;
+  min-width: 130px;
+  margin: 15px 5px;
+}

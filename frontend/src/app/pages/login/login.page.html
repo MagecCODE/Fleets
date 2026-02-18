@@ -1,0 +1,38 @@
+<ion-content>
+  <div class="login-container">
+    <ion-card class="login-card">
+      <div class="login-card__header">
+        <h1>Iniciar Sesión</h1>
+      </div>
+
+      <div class="login-card__input">
+        <ion-label>Usuario</ion-label>
+        <div>
+          <ion-input class="login-card__user" type="text" placeholder="Tu nombre de usuario"></ion-input>
+        </div>
+      </div>
+
+      <div class="login-card__input">
+        <ion-label>Contraseña</ion-label>
+        <div >
+          <ion-input type="password" placeholder="Tu contraseña"></ion-input>
+        </div>
+      </div>
+
+      @if (errorMessage) {
+      <div class="error-text-small" style="margin-bottom: 15px">
+        {{ errorMessage }}
+      </div>
+      }
+
+      <ion-button
+        expand="block"
+        (click)="login()"
+        class="premium-btn"
+        [disabled]="!username || !password"
+      >
+        Iniciar Sesión
+      </ion-button>
+    </ion-card>
+  </div>
+</ion-content>

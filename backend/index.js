@@ -1,8 +1,8 @@
-require('dotenv').config();
+require("dotenv").config();
 // Imports
 const express = require("express");
 const cors = require("cors");
-let path= require('path');
+let path = require("path");
 
 // Set Ports
 const PORT = process.env.PORT || 8080;
@@ -11,14 +11,14 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 
 // Use public directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // CORS
 let corsOptions = {
-    origin: "http://localhost:8100"
+  origin: "http://localhost:8100",
 };
 
-// Enable CORS          
+// Enable CORS
 app.use(cors(corsOptions));
 
 // Parse requests of content-type - application/json
@@ -28,19 +28,21 @@ app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
 // Database
-const db = require ('./models');
+const db = require("./models");
 
 // Normal use. Doesn't delete  database
 // db.sequelize.sync();
 
 // Use { force: true } to drop and re-create all tables each time the server starts.
 db.sequelize.sync({ force: false }).then(() => {
-    console.log("[SERVER] -> Welcome to Fleets backend server..... [OK] connected database.");
+  console.log(
+    "[SERVER] -> Welcome to Fleets backend server..... [OK] connected database.",
+  );
 });
 
 // Routes
-app.get('/', (req, res) => {
-    res.json({ message: 'Bienvenid@  a Fleets' });
+app.get("/", (req, res) => {
+  res.json({ message: "Bienvenid@  a Fleets" });
 });
 
 /*
@@ -87,7 +89,6 @@ require("./routes/incidence.routes")(app);
 require("./routes/inventory.routes")(app);
 require("./routes/unit.routes")(app);
 
-
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
