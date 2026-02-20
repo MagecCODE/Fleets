@@ -1,54 +1,105 @@
-// Fondo principal de la página
-.dot-container {
-  background: linear-gradient(
-    60deg,
-    var(--ion-blue-text),
-    var(--ion-blue-subtext)
-  );
-  display: flex;
-  width: 100%;
-  height: 100%;
-  min-width: 600px;
-  color: var(--ion-blue-text);
-  padding: 20px 0px 0px 0px;
+ion-content {
+  --background: linear-gradient(60deg,
+      var(--ion-blue-text),
+      var(--ion-blue-subtext));
 }
 
-.dot-grid {
+// Fondo principal de la página
+.unit-page {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  max-width: 1200px;
+  min-height: 100%;
   min-width: 600px;
+  color: var(--ion-blue-text);
 
-  #header-text {
-    display: block;
+  &__grid {
+    width: 100%;
+    max-width: 1200px;
+    min-width: 600px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 10px 14px 10px;
+  }
+
+  &__header-info {
+    display: flex;
+    align-items: baseline;
+    gap: 15px;
+  }
+
+  &__unit-number {
     font-size: 2rem;
     font-weight: 900;
     color: var(--ion-blue-background);
-    padding: 0px 0px 15px 10px;
+    line-height: 1;
+  }
+
+  &__unit-type {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--ion-blue-background);
+    opacity: 0.9;
+    line-height: 1;
+  }
+
+  .logout-btn {
+    --color: var(--ion-blue-background);
+    --padding-start: 8px;
+    --padding-end: 8px;
+    margin: 0;
+    height: 30px;
+    font-size: 1.3rem;
+    padding: 12px 0px;
+  }
+
+  &__section-title {
+    display: block;
+    color: var(--ion-blue-background);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 32px 0 16px 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  &__new-incidence-button {
+    --background: var(--ion-red-action);
+    --border-radius: 12px;
+    --color: var(--ion-blue-background);
+    --box-shadow: none;
+    display: flex;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 45px;
+    min-width: 130px;
+    margin: 15px 5px;
   }
 }
 
-// Títulos de sección
-.dot-grid__title {
-  display: block;
-  color: var(--ion-blue-background);
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin: 20px 0 10px 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
 // Tarjetas de los empleados
-.dot-grid__card-employee {
+.employee-card {
   background: var(--ion-blue-background);
   border-radius: 15px;
   box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
-  margin: 0px 0px 10px 0px;
-  padding: 8px 0px 0px 0px;
+  margin: 0 0 10px 0;
+  padding: 8px 0 0 0;
   text-align: center;
   text-transform: capitalize;
 
-  ion-avatar {
+  &__item {
+    --background: transparent;
+    --border-color: transparent;
+    padding: 0;
+  }
+
+  &__avatar {
     --border-radius: 10%;
     width: 100px;
     height: auto;
@@ -59,105 +110,129 @@
     }
   }
 
-  ion-card-title {
+  &__title {
     color: var(--ion-blue-text);
     font-weight: 700;
     font-size: 1.5rem;
   }
 
-  ion-card-subtitle {
+  &__subtitle {
     color: var(--ion-blue-text);
     font-weight: 300;
     font-size: 1.1rem;
   }
 
-  ion-item {
-    --background: transparent;
-    --border-color: transparent;
-    padding: 0px;
+  &__content {
+    padding: 0;
   }
 
-  ion-chip {
+  &__info-item {
+    --background: transparent;
+    --border-color: transparent;
+    padding: 0;
+  }
+
+  &__info-label {
+    font-weight: 700;
+  }
+
+  &__chip {
     background: var(--ion-blue-highlight);
     color: var(--ion-blue-text);
     font-size: 1rem;
     font-weight: 300;
-    margin: 10px 0px 15px 0px;
+    margin: 10px 0 15px 0;
   }
 }
 
 // Tarjeta de inventario
-.dot-grid__card-inventory {
-  display: flex;
+.inventory-card {
   background: var(--ion-blue-background);
   border-radius: 15px;
   box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
-  margin: 0px 4px 35px 4px;
-  padding: px 40px 0px 8px;
+  margin: 0 4px 10px 4px;
   text-align: left;
   text-transform: capitalize;
+  overflow: hidden;
 
-  ion-col {
-    display: flexbox;
+  &__grid {
+    display: grid;
+    grid-template-columns: 3fr repeat(2, 1fr) 200px;
+    width: 100%;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 16px;
     font-weight: 700;
     color: var(--ion-blue-text);
-    text-transform: capitalize;
     font-size: 1rem;
   }
 
-  // Botón "Solicitar"
-  #request-button {
+  &__item-label {
+    margin: 0 0 4px 0;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    font-weight: 700;
+  }
+
+  &__button-col {
+    grid-column: 4;
+    min-width: 150px;
+    padding: 0;
+  }
+
+  &__request-button {
     --background: var(--ion-red-action);
-    --border-radius: 12px;
     --color: var(--ion-blue-background);
     --box-shadow: none;
-    margin: 14px 0px;
+    --border-radius: 0 15px 15px 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
     font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
-    height: 45px;
-    min-width: 130px;
   }
-}
-
-.dot-grid__card-inventory__second-row {
-  padding: 15px 0px 5px 0px;
-
-  ion-col {
-    font-weight: 300;
-    color: var(--ion-blue-text);
-    text-transform: capitalize;
-    font-size: 1rem;
-  }
-}
-
-// Cabecera de la tabla
-#header-table,
-#table-row {
-  color: var(--ion-blue-background);
 }
 
 // Estilo para la "Tabla" de Incidentes
-.dot-grid__table {
+.incidencias-table {
   border-radius: 15px;
 
-  ion-row {
+  &__row {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     align-items: center;
+    padding: 12px 0;
+    color: var(--ion-blue-background);
+  }
+
+  &__cell-text {
+    margin: 0;
+    padding: 0 10px;
   }
 }
 
-// Botón "Nueva incidencia"
-#incidence-button {
-  --background: var(--ion-red-action);
-  --border-radius: 12px;
-  --color: var(--ion-blue-background);
-  --box-shadow: none;
-  display: flex;
-  font-size: 1rem;
-  font-weight: bold;
+// Chips de estado para la tabla de incidencias
+.status-chip {
+  --color: var(--ion-blue-text);
+  font-weight: 700;
+  margin: 0;
   text-transform: uppercase;
-  height: 45px;
-  min-width: 130px;
-  margin: 15px 5px;
+  font-size: 0.8rem;
+
+  &--pendiente {
+    --background: var(--ion-red-action);
+  }
+
+  &--proceso {
+    --background: #ffa500;
+  }
+
+  &--resuelta {
+    --background: #2dd36f;
+  }
 }

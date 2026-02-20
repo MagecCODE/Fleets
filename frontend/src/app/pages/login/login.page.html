@@ -8,14 +8,15 @@
       <div class="login-card__input">
         <ion-label>Usuario</ion-label>
         <div>
-          <ion-input class="login-card__user" type="text" placeholder="Tu nombre de usuario"></ion-input>
+          <ion-input class="login-card__user" type="text" placeholder="Tu nombre de usuario"
+            [(ngModel)]="username"></ion-input>
         </div>
       </div>
 
       <div class="login-card__input">
         <ion-label>Contraseña</ion-label>
-        <div >
-          <ion-input type="password" placeholder="Tu contraseña"></ion-input>
+        <div>
+          <ion-input type="password" placeholder="Tu contraseña" [(ngModel)]="password"></ion-input>
         </div>
       </div>
 
@@ -25,12 +26,7 @@
       </div>
       }
 
-      <ion-button
-        expand="block"
-        (click)="login()"
-        class="premium-btn"
-        [disabled]="!username || !password"
-      >
+      <ion-button expand="block" (click)="login()" class="premium-btn" [disabled]="!username || !password">
         Iniciar Sesión
       </ion-button>
     </ion-card>

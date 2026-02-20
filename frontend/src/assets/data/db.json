@@ -35,8 +35,8 @@
     }
   ],
   "units": [
-    { "id": 1, "unitfleet": 101, "typefleet": "SOPORTE_VITAL_AVANZADO" },
-    { "id": 2, "unitfleet": 202, "typefleet": "SOPORTE_VITAL_BASICO" }
+    { "id": 1, "unitfleet": 101, "typefleet": "SOPORTE VITAL AVANZADO" },
+    { "id": 2, "unitfleet": 202, "typefleet": "SOPORTE VITAL BÁSICO" }
   ],
   "dotas": [
     {
@@ -55,7 +55,7 @@
       "incidence_type": "MECÁNICA",
       "description": "Fallo en el sistema de luces prioritarias",
       "date": "2024-05-20T10:30:00Z",
-      "status": "OPEN"
+      "status": "PENDIENTE"
     },
         {
       "id": 2,
@@ -65,6 +65,15 @@
       "description": "El arranque de la ambulancia no funciona",
       "date": "2025-06-20T10:30:00Z",
       "status": "EN PROCESO"
+    },
+        {
+      "id": 32,
+      "unitfleet": 101,
+      "dni_emp": "12345678A",
+      "incidence_type": "INFORMÁTICA",
+      "description": "La aplicación se bloqueaba al intentar entrar desde la pantalla de login. No es un error habitual sino que se produce de forma aleatoria por lo que es difícil de detectar",
+      "date": "2026-01-20T16:27:00Z",
+      "status": "RESUELTA"
     }
   ],
   "products": [
@@ -74,7 +83,7 @@
       "dni_emp": "87654321B",
       "item_name": "Desfibrilador Zoll X Series",
       "quantity": 1,
-      "status": "OPERATIVE"
+      "status": "ADECUADO"
     },
     {
       "id": 2,
@@ -82,7 +91,7 @@
       "dni_emp": "87654321B",
       "item_name": "Botes de Oxígeno 5L",
       "quantity": 2,
-      "status": "LOW_STOCK"
+      "status": "BAJO"
     }
   ]
 }

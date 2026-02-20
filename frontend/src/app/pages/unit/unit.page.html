@@ -1,118 +1,142 @@
-<!-- Bloque de dotación de la ambulancia -->
 <ion-content>
-  <div class="dot-container">
-    <ion-grid class="dot-grid">
-      <ion-text id="header-text"> UNIDAD 101 </ion-text>
+  <div class="unit-page">
+    <ion-grid class="unit-page__grid">
+      <div class="unit-page__header">
+        <div class="unit-page__header-info">
+          <span class="unit-page__unit-number">UNIDAD {{ unitInfo?.unitfleet }}</span>
+          <span class="unit-page__unit-type">{{ unitInfo?.typefleet }}</span>
+        </div>
+        <ion-button fill="clear" (click)="logout()" class="logout-btn">
+          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <!-- Bloque de dotación de la ambulancia -->
       <div>
         <ion-row>
           <!-- Tarjetas para mostrar la dotación de la ambulancia -->
           @for (employee of employees; track employee.dni) {
           <ion-col>
-            <ion-card class="dot-grid__card-employee">
-              <ion-item class="as">
+            <ion-card class="employee-card">
+              <ion-item class="employee-card__item">
                 <!-- Muestra la foto del empleado -->
-                <ion-avatar>
-                  <img
-                    alt="Foto del empleado"
-                    src="https://ionicframework.com/docs/img/demos/avatar.svg"
-                  />
+                <ion-avatar class="employee-card__avatar">
+                  <img alt="Foto del empleado" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                 </ion-avatar>
                 <!-- Muestra el nombre y apellidos -->
-                <ion-card-header>
-                  <ion-card-title>{{ employee.name }}</ion-card-title>
-                  <ion-card-subtitle>{{ employee.surname }}</ion-card-subtitle>
+                <ion-card-header class="employee-card__header">
+                  <ion-card-title class="employee-card__title">{{ employee.name }}</ion-card-title>
+                  <ion-card-subtitle class="employee-card__subtitle">{{ employee.surname }}</ion-card-subtitle>
                 </ion-card-header>
               </ion-item>
               <!-- Muestra el resto de los datos que se quieran mostrar -->
-              <ion-card-content>
-                <ion-item>
-                  <ion-text><span style="font-weight: 700;">Teléfono: </span>{{ employee.phone }}</ion-text>
+              <ion-card-content class="employee-card__content">
+                <ion-item class="employee-card__info-item">
+                  <ion-text class="employee-card__info-text">
+                    <span class="employee-card__info-label">Teléfono: </span>{{
+                    employee.phone }}
+                  </ion-text>
                 </ion-item>
               </ion-card-content>
               <!-- Muestra el puesto que ocupa dentro de la dotación -->
-              @if (employee.rol == "DRIVER") {
-              <ion-chip> Conductor </ion-chip>
-              } @if (employee.rol == "SANITARY") {
-              <ion-chip> Técnico Sanitario </ion-chip>
-              } @if (employee.rol == "FACULTATIVE") {
-              <ion-chip> Facultativo </ion-chip>
-              }
+              <div class="employee-card__chips">
+                @if (employee.rol == "DRIVER") {
+                <ion-chip class="employee-card__chip"> Conductor </ion-chip>
+                } @if (employee.rol == "SANITARY") {
+                <ion-chip class="employee-card__chip">
+                  Técnico Sanitario
+                </ion-chip>
+                } @if (employee.rol == "FACULTATIVE") {
+                <ion-chip class="employee-card__chip"> Facultativo </ion-chip>
+                }
+              </div>
             </ion-card>
           </ion-col>
           }
         </ion-row>
       </div>
 
-      <div>
-        <!-- Bloque de inventario de la ambulancia -->
-        <ion-text class="dot-grid__title">Inventario</ion-text>
-        @for (product of products; track product.id) {
-        <!-- Este condicional oculta los productos de los que hay suficiente stock -->
-        @if (product.status == 'LOW_STOCK') {
-        <ion-card class="dot-grid__card-inventory">
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <!-- La primera fila muestra la cabecera de la tarjeta -->
-                <ion-row>
-                  <ion-col>
-                    ARTÍCULO
-                  </ion-col>
-                  <ion-col>
-                    CANTIDAD
-                  </ion-col>
-                  <ion-col>
-                    ESTADO
-                  </ion-col>
-                </ion-row>
-                <!-- Esta segunda fila muestra los datos del inventario -->
-                <ion-row class="dot-grid__card-inventory__second-row">
-                  <ion-col>
-                    {{ product.item_name }}
-                  </ion-col>
-                  <ion-col>
-                    {{ product.quantity }}
-                  </ion-col>
-                  <ion-col>
-                    {{ product.status }}
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-              <!-- Esta columna es para el botón de solicitud -->
-              <ion-col size="2">
-                <ion-button id="request-button"> Solicitar </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+      <div class="unit-page__section">
+        <ion-text class="unit-page__section-title">Inventario</ion-text>
+        @for (product of products; track product.id){ @if (product.status ==
+        "BAJO") {
+        <ion-card class="inventory-card">
+          <div class="inventory-card__grid">
+            <ion-col class="inventory-card__item">
+              <h5 class="inventory-card__item-label">ARTÍCULO</h5>
+              {{ product.item_name }}
+            </ion-col>
+            <ion-col class="inventory-card__item">
+              <h5 class="inventory-card__item-label">CANTIDAD</h5>
+              {{ product.quantity }}
+            </ion-col>
+            <ion-col class="inventory-card__item">
+              <h5 class="inventory-card__item-label">STOCK</h5>
+              {{ product.status }}
+            </ion-col>
+            <ion-col class="inventory-card__button-col">
+              <ion-button class="inventory-card__request-button ion-no-margin ion-no-padding" expand="full"
+                fill="clear">
+                Solicitar
+              </ion-button>
+            </ion-col>
+          </div>
         </ion-card>
         } }
       </div>
 
-      <div>
-        <!-- Bloque de incidentes relacionandos con la ambulancia -->
-        <ion-text class="dot-grid__title">Incidentes</ion-text>
+      <!-- Bloque de incidentes relacionandos con la ambulancia -->
+      <div class="unit-page__section">
+        <ion-text class="unit-page__section-title">INCIDENCIAS</ion-text>
         <!-- Tabla para mostrar los incidentes.
          Este primer bloque es la cabecera de la tabla -->
-        <ion-grid class="dot-grid__table">
-          <ion-row id="header-table">
-            <ion-col size="1.5"><p>TIPO</p></ion-col>
-            <ion-col size="6"><p>DESCRIPCIÓN</p></ion-col>
-            <ion-col><p>FECHA APERTURA</p></ion-col>
-            <ion-col><p>ESTADO</p></ion-col>
+        <ion-grid class="incidencias-table">
+          <ion-row class="incidencias-table__row incidencias-table__row--header">
+            <ion-col size="1.5">
+              <p class="incidencias-table__cell-text">TIPO</p>
+            </ion-col>
+            <ion-col size="6.5">
+              <p class="incidencias-table__cell-text">DESCRIPCIÓN</p>
+            </ion-col>
+            <ion-col size="2.5">
+              <p class="incidencias-table__cell-text">FECHA APERTURA</p>
+            </ion-col>
+            <ion-col>
+              <p class="incidencias-table__cell-text">ESTADO</p>
+            </ion-col>
           </ion-row>
-        </ion-grid>
-        <!-- Este segundo bloque muestra los datos en la tabla -->
-        <ion-grid class="dot-grid__table">
+          <!-- Este segundo bloque muestra los datos en la tabla -->
           @for (incident of incidence; track incident.id) {
-          <ion-row id="table-row">
-            <ion-col size="1.5"><p>{{ incident.incidence_type }}</p></ion-col>
-            <ion-col size="6"><p>{{ incident.description }}</p></ion-col>
-            <ion-col><p>{{ incident.date }}</p></ion-col>
-            <ion-col><p>{{ incident.status }}</p></ion-col>
+          <ion-row class="incidencias-table__row">
+            <ion-col size="1.5">
+              <p class="incidencias-table__cell-text">
+                {{ incident.incidence_type }}
+              </p>
+            </ion-col>
+            <ion-col size="6.5">
+              <p class="incidencias-table__cell-text">
+                {{ incident.description }}
+              </p>
+            </ion-col>
+            <ion-col size="2.5">
+              <p class="incidencias-table__cell-text">
+                {{ incident.date | date: 'dd / MM / yyyy - HH.mm' }}
+              </p>
+            </ion-col>
+            <ion-col>
+              @if (incident.status == 'PENDIENTE') {
+              <ion-chip class="status-chip status-chip--pendiente">PENDIENTE</ion-chip>
+              } @if (incident.status == 'EN PROCESO') {
+              <ion-chip class="status-chip status-chip--proceso">EN PROCESO</ion-chip>
+              } @if (incident.status == 'RESUELTA') {
+              <ion-chip class="status-chip status-chip--resuelta">RESUELTA</ion-chip>
+              }
+            </ion-col>
           </ion-row>
           }
         </ion-grid>
-        <ion-button id="incidence-button"> Nueva incidencia </ion-button>
+        <ion-button class="unit-page__new-incidence-button">
+          Nueva incidencia
+        </ion-button>
       </div>
     </ion-grid>
   </div>

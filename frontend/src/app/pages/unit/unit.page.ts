@@ -1,10 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { InventoryService } from 'src/app/services/inventory.service';
 import { IncidenciesService } from 'src/app/services/incidencies.service';
+import { UnitService } from 'src/app/services/unit.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { addIcons } from 'ionicons';
+import { logOutOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-unit',
@@ -17,12 +21,17 @@ export class UnitPage implements OnInit {
   private employeeService = inject(EmployeeService);
   private inventoryService = inject(InventoryService);
   private incidenceService = inject(IncidenciesService);
+  private unitService = inject(UnitService);
+  private authService = inject(AuthService);
 
   employees: any[] = [];
   products: any[] = [];
   incidence: any[] = [];
+  unitInfo: any = null;
 
-  constructor() {}
+  constructor(private navCtrl: NavController) {
+    addIcons({ 'log-out-outline': logOutOutline });
+  }
 
   ngOnInit() {
     this.employeeService.getEmployees().subscribe({
@@ -42,5 +51,19 @@ export class UnitPage implements OnInit {
         this.incidence = data;
       },
     });
+
+    const employeeId = this.authService.getEmployeeId();
+    if (employeeId) {
+      this.unitService.getUnitByEmployeeId(employeeId).subscribe({
+        next: (unit) => {
+          this.unitInfo = unit;
+        },
+      });
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.navCtrl.navigateRoot('/login');
   }
 }

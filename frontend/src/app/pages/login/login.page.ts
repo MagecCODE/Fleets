@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
+import { EmployeeService } from 'src/app/services/employee.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,9 @@ export class LoginPage {
   errorMessage: string = '';
 
   constructor(
-    private router: Router,
     private navCtrl: NavController,
+    private employeeService: EmployeeService,
+    private authService: AuthService
   ) {}
 
   login() {
@@ -27,5 +29,24 @@ export class LoginPage {
       this.errorMessage = 'Por favor, rellena todos los campos';
       return;
     }
+
+    this.employeeService.getEmployees().subscribe({
+      next: (employees) => {
+        const user = employees.find(
+          (e) => (e.name === this.username || e.dni === this.username)
+        );
+
+        if (user) {
+          // In a real app, we would verify password here
+          this.authService.setUser(user);
+          this.navCtrl.navigateRoot('/unit');
+        } else {
+          this.errorMessage = 'Usuario o contraseña incorrectos';
+        }
+      },
+      error: () => {
+        this.errorMessage = 'Error al conectar con el servidor';
+      }
+    });
   }
 }
