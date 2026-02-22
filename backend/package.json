@@ -9,9 +9,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
+    
+    "migrate": "npx sequelize db:migrate",
+    "migrate:undo": "npx sequelize db:migrate:undo:all",
+
     "seed": "npx sequelize db:seed:all",
     "seed:undo": "npx sequelize db:seed:undo:all",
-    "reset-db": "echo 🧹 Borrando seeds... && npx sequelize db:seed:undo:all && echo 📦 Ejecutando seeds... && npx sequelize db:seed:all && echo ✔ Base de datos regenerada correctamente"
+    
+    "reset-db": "echo 🧹 Borrando BD... && npm run migrate:undo && npm run seed:undo && echo 📦 Creando BD... && npm run migrate && npm run seed && echo ✔ Base de datos regenerada correctamente"
   },
   "dependencies": {
     "cors": "^2.8.6",

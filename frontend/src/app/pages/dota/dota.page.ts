@@ -47,6 +47,11 @@ export class DotaPage implements OnInit {
 
     const employeeId = this.authService.getEmployeeId();   
 
+    console.log("[DEBUG - DOTA] ID del empleado logueado:", employeeId);
+    console.log("[DEBUG - DOTA] Usuario cargado:", this.authService.getUser());
+    console.log("[DEBUG - DOTA] ID empleado:", this.authService.getEmployeeId());
+
+    
     this.inventoryService.getInventary().subscribe({
       next: (data) => {
         this.inventory = data;
@@ -61,39 +66,43 @@ export class DotaPage implements OnInit {
     
     this.getDotaInfo(employeeId);     
   }
-  
+
   // Refactored method to fetch Dota info and then load related Unit and Employees
   private getDotaInfo = (employeeId: number | null) => {
-    if (employeeId) {
-        this.dotaService.getDotaByEmpID(employeeId).subscribe({
-          next: (dota) => {
-            this.dotaInfo = dota;
-            const unitFleet = this.dotaInfo?.unitfleet;
+
+    if (employeeId) {        
+      this.dotaService.getDotaByEmpID(employeeId).subscribe({
+          next: (dotaArray) => {
+            console.log("[DEBUG - DOTA] Dota Array: ",dotaArray);
+            this.dotaInfo = dotaArray[0];
+
+            if(!this.dotaInfo) return;
+
+            const unitFleet = this.dotaInfo.unitfleet;
+
+            console.log("[DEBUG - DOTA] Dota unit: ",unitFleet);
 
             // 1. Cargar la unidad
             if (unitFleet) {
               this.unitService.getUnitByUnitFleet(unitFleet).subscribe({
-                next: (unit) => {
-                  this.unitInfo = unit;
-                }
-              });
+                next: (unit) => this.unitInfo = unit});
             }
 
             // 2. Cargar SOLO los empleados de la dotación
             const ids = [
-              this.dotaInfo?.driveId,
-              this.dotaInfo?.sanitId,
-              this.dotaInfo?.facultId
+              this.dotaInfo.driveId,
+              this.dotaInfo.sanitId,
+              this.dotaInfo.facultId
             ];
+            
             this.employees = [];
             ids.forEach(id => {
               if (id) {
                 this.employeeService.getEmployeeById(id).subscribe({
-                  next: (emp) => this.employees.push(emp)
-                });
+                  next: (emp) => this.employees.push(emp)});
               }
             });
-        }
+          }
       });
     }
   }

@@ -56,9 +56,11 @@ export class EmployeeService {
   // Login method
 
   login(dni: string, password: string) {
-    return this.http.post<Employee>(`${this.EMPLOYE_SERVER_URL}/login`, {
-      dni,
-      password
-    });
+    return this.http.post<{ message: string, user: Employee }>(
+      `${this.EMPLOYE_SERVER_URL}/login`, 
+      {dni, password}
+    ).pipe(
+      map(response => response.user) // Extraemos solo el usuario de la respuesta
+    );
   }
 }

@@ -7,7 +7,6 @@ export class AuthService {
   private currentUser: any = null;
 
   constructor() {
-    // Attempt to load user from localStorage on init
     const savedUser = localStorage.getItem('currentUser');
     if (savedUser) {
       this.currentUser = JSON.parse(savedUser);
@@ -31,4 +30,6 @@ export class AuthService {
     this.currentUser = null;
     localStorage.removeItem('currentUser');
   }
+
+
 }

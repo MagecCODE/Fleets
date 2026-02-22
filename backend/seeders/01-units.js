@@ -5,7 +5,7 @@ module.exports = {
     const units = [];
 
     // Medicalizadas 1000–1009
-    for (let i = 1000; i <= 1009; i++) {
+    for (let i = 1000; i <= 1004; i++) {
       units.push({
         unitfleet: i,
         typefleet: "Medicalizada",
@@ -15,7 +15,7 @@ module.exports = {
     }
 
     // Sanitizadas 2000–2009
-    for (let i = 2000; i <= 2009; i++) {
+    for (let i = 2000; i <= 2004; i++) {
       units.push({
         unitfleet: i,
         typefleet: "Sanitizada",
@@ -25,7 +25,7 @@ module.exports = {
     }
 
     // Básicas 3000–3009
-    for (let i = 3000; i <= 3009; i++) {
+    for (let i = 3000; i <= 3004; i++) {
       units.push({
         unitfleet: i,
         typefleet: "Soporte Vital Básico",
@@ -35,7 +35,7 @@ module.exports = {
     }
 
     // No urgentes 4000–4009
-    for (let i = 4000; i <= 4009; i++) {
+    for (let i = 4000; i <= 4004; i++) {
       units.push({
         unitfleet: i,
         typefleet: "No Urgente",

@@ -35,8 +35,9 @@ export class LoginPage {
 
     this.employeeService.login(this.username, this.password).subscribe({
       next: (response) => {
+        console.log("[DEBUG - LOGIN] RESPUESTA LOGIN:", response);
         
-        const user: Employee = response; 
+        const user = response; // Ajusta esto según la estructura de tu respuesta
         this.authService.setUser(user);
         this.navCtrl.navigateRoot('/dota');
 
