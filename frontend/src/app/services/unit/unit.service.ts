@@ -8,21 +8,27 @@ import { API_FLEET } from 'src/app/config/config';
 })
 export class UnitService {
   private http = inject(HttpClient);
+  
+  UNIT_SERVER_URL : string =  API_FLEET.UNIT;
 
-  private UNIT_SERVER_URL = API_FLEET.UNIT;
-
+  // Fetch all units from the backend
   getUnits(): Observable<any[]> {
     return this.http
       .get<any>(this.UNIT_SERVER_URL)
       .pipe(map((response) => response.units));
   }
 
-  getTypeUnit(fleetNumber: number): Observable<any> {
-    return this.getUnits().pipe(
-      map((units) => units.find((u) => u.unitfleet === fleetNumber))
+  // Fetch a single unit by fleet number
+  getUnitByUnitFleet(unitfleet: number): Observable<any> {
+
+    return this.http.get<any>(`${this.UNIT_SERVER_URL}/${unitfleet}`).pipe(
+      map((response) => {
+        return response.unit;
+      })
     );
   }
 
+  /*
   getUnitByEmployeeId(employeeId: number): Observable<any> {
     return this.http.get<any>(this.UNIT_SERVER_URL).pipe(
       map((response) => {
@@ -37,4 +43,5 @@ export class UnitService {
       })
     );
   }
+  */
 }

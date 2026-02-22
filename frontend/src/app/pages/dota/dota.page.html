@@ -32,20 +32,19 @@
               <ion-card-content class="employee-card__content">
                 <ion-item class="employee-card__info-item">
                   <ion-text class="employee-card__info-text">
-                    <span class="employee-card__info-label">Teléfono: </span>{{
-                    employee.phone }}
+                    <span class="employee-card__info-label"></span>{{ employee.prof }}
                   </ion-text>
                 </ion-item>
               </ion-card-content>
               <!-- Muestra el puesto que ocupa dentro de la dotación -->
               <div class="employee-card__chips">
-                @if (employee.rol == "DRIVER") {
+                @if (employee.id == dotaInfo?.driveId) {
                 <ion-chip class="employee-card__chip"> Conductor </ion-chip>
-                } @if (employee.rol == "SANITARY") {
+                } @if (employee.id == dotaInfo?.sanitId) {
                 <ion-chip class="employee-card__chip">
-                  Técnico Sanitario
+                  Sanitario
                 </ion-chip>
-                } @if (employee.rol == "FACULTATIVE") {
+                } @if (employee.id == dotaInfo?.facultId) {
                 <ion-chip class="employee-card__chip"> Facultativo </ion-chip>
                 }
               </div>
@@ -57,7 +56,7 @@
 
       <div class="unit-page__section">
         <ion-text class="unit-page__section-title">Inventario</ion-text>
-        @for (product of products; track product.id){ @if (product.status ==
+        @for (product of inventory; track product.id){ @if (product.status ==
         "BAJO") {
         <ion-card class="inventory-card">
           <div class="inventory-card__grid">

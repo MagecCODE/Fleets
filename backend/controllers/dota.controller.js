@@ -117,6 +117,46 @@ exports.findOne = async (req, res) => {
     }   
 };
 
+// Find a single Dota with an Unit Fleet Number
+exports.findByUnitFleet = async (req, res) => {
+    const unitfleet = req.params.unitfleet; 
+    try {
+        const dota = await Dota.findOne({ where: { unitfleet } });
+        if (dota) {
+            res.status(200).send(dota);
+        }else { 
+            res.status(404).send({ message: `Cannot find Dota with Unit Fleet Number=${unitfleet}.` });
+        }   
+    } catch (err) {
+        console.error("[ERROR] en el método findByUnitFleet del controlador de Dota:", err);    
+        res.status(500).send({ message: "Error retrieving Dota with Unit Fleet Number=" + unitfleet });
+    }
+};
+
+// Find a single Dota with an Employee id (driveId, sanitId o facultId)
+exports.findByEmployeeId = async (req, res) => {
+    const employeeId = req.params.employeeId;
+    try {
+        const dotas = await Dota.findAll({
+            where: {
+                [Op.or]: [
+                    { driveId: employeeId },
+                    { sanitId: employeeId },    
+                    { facultId: employeeId }
+                ]
+            }
+        }); 
+        if (dotas.length > 0) {
+            res.status(200).send(dotas);
+        }else {
+            res.status(404).send({ message: `Cannot find Dota with Employee id=${employeeId}.` });
+        }
+    } catch (err) {
+        console.error("[ERROR] en el método findByEmployeeId del controlador de Dota:", err);    
+        res.status(500).send({ message: "Error retrieving Dota with Employee id=" + employeeId });
+    }
+};
+
 // Update a Dota by the id in the request
 exports.update = async (req, res) => {
     const id = req.params.id;

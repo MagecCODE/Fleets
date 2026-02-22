@@ -9,6 +9,8 @@ module.exports = app => {
 
     router.post("/", dotas.create);
     router.get("/", dotas.findAll);
+    router.get("/emp/:id", dotas.findByEmployeeId);
+    router.get("/unit/:id", dotas.findByUnitFleet);
     router.get("/:id", dotas.findOne);
     router.put("/:id", dotas.update);
     router.delete("/:id", dotas.delete);

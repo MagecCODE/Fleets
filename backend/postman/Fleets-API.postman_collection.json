@@ -105,8 +105,16 @@
       "request": { "method": "GET", "url": "{{base_url}}/dotas" }
     },
     {
-      "name": "GET - Dotación por unidad",
-      "request": { "method": "GET", "url": "{{base_url}}/dotas/3010" }
+      "name": "GET - Dotación por ID",
+      "request": { "method": "GET", "url": "{{base_url}}/dotas/1" }
+    },
+        {
+        "name": "GET - Dotación por unidad",
+        "request": { "method": "GET", "url": "{{base_url}}/dotas/unit/3000" }
+    },
+    {  
+      "name": "GET - Dotación por empleado",
+      "request": { "method": "GET", "url": "{{base_url}}/dotas/emp/26" }
     },
     {
       "name": "POST - Crear dotación",

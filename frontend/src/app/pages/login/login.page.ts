@@ -35,9 +35,12 @@ export class LoginPage {
 
     this.employeeService.login(this.username, this.password).subscribe({
       next: (response) => {
-        const user = response as Employee;
+        
+        const user: Employee = response; 
         this.authService.setUser(user);
-        this.navCtrl.navigateRoot('/unit');
+        this.navCtrl.navigateRoot('/dota');
+
+        //if (user.rol === 'Sanitary') { return this.navCtrl.navigateRoot('/unit');}
       },
       error: (err) => {
         if (err.status === 401) {

@@ -1,6 +1,6 @@
 export class Unit{
     constructor(
-        public unit_fleet: number,
-        public type_fleet: string,
+        public unitfleet: number,
+        public typefleet: string,
     ){}
 }

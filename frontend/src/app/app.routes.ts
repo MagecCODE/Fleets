@@ -12,7 +12,7 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'unit',
-    loadComponent: () => import('./pages/unit/unit.page').then( m => m.UnitPage)
+    path: 'dota',
+    loadComponent: () => import('./pages/dota/dota.page').then( m => m.DotaPage)
   },
 ];
