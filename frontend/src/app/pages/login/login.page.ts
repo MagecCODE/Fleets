@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
-import { EmployeeService } from 'src/app/services/employee.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { Employee } from 'src/app/models/employee.model';
+import { AuthService } from 'src/app/auth/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -25,27 +27,24 @@ export class LoginPage {
 
   login() {
     this.errorMessage = '';
+
     if (!this.username || !this.password) {
       this.errorMessage = 'Por favor, rellena todos los campos';
       return;
     }
 
-    this.employeeService.getEmployees().subscribe({
-      next: (employees) => {
-        const user = employees.find(
-          (e) => (e.name === this.username || e.dni === this.username)
-        );
-
-        if (user) {
-          // In a real app, we would verify password here
-          this.authService.setUser(user);
-          this.navCtrl.navigateRoot('/unit');
-        } else {
-          this.errorMessage = 'Usuario o contraseña incorrectos';
-        }
+    this.employeeService.login(this.username, this.password).subscribe({
+      next: (response) => {
+        const user = response as Employee;
+        this.authService.setUser(user);
+        this.navCtrl.navigateRoot('/unit');
       },
-      error: () => {
-        this.errorMessage = 'Error al conectar con el servidor';
+      error: (err) => {
+        if (err.status === 401) {
+          this.errorMessage = 'Usuario o contraseña incorrectos';
+        } else {
+          this.errorMessage = 'Error al conectar con el servidor';
+        }
       }
     });
   }

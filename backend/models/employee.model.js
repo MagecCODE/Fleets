@@ -30,7 +30,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         prof: {
             type: Sequelize.ENUM(...Object.values(PROFESSIONS)),
-            defaultValue: PROFESSIONS.TECNICO_EMERGENCIAS_SANITARIAS
+            defaultValue: PROFESSIONS.TES
         }, 
         rol: {
             type: Sequelize.ENUM(...Object.values(ROLES)),
@@ -40,5 +40,14 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
         }            
     });
+
+    /*
+    *** ASOCIACIONES CON LA BBDD Y LOS MODELOS ***
+    */
+    Employee.associate = function(models) {
+        Employee.hasMany(models.incidencies, { foreignKey: "dni_emp", sourceKey: "dni" });
+        Employee.hasMany(models.inventories, { foreignKey: "dni_emp", sourceKey: "dni" });
+    };
+    
     return Employee;
 };

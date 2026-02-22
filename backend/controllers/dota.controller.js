@@ -91,6 +91,7 @@ exports.create = async (req, res) => {
 
 // Retrieve all Dotas from the database.
 exports.findAll = async (req, res) => {
+    
     try {
         const dotas = await Dota.findAll();
         res.status(200).send(dotas);
@@ -121,7 +122,7 @@ exports.update = async (req, res) => {
     const id = req.params.id;
     try {
         const [updated] = await Dota.update(req.body, {
-            where: { id: id }
+            where: { id }
         });
         if (updated) {
             const updatedDota = await Dota.findByPk(id);
@@ -140,7 +141,7 @@ exports.delete = async (req, res) => {
     const id = req.params.id;
     try {
         const deleted = await Dota.destroy({
-            where: { id: id }
+            where: { id }
         });
         if (deleted) {
             res.status(200).send({ message: "Dota was deleted successfully!" });

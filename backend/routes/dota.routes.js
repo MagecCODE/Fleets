@@ -1,19 +1,17 @@
 require('dotenv').config();
 
-module.exports = app =>{
+module.exports = app => {
     const dotas = require("../controllers/dota.controller.js");
-    let router = require("express").Router();
-    const API= process.env.API_URL;
-    const DOTA_URL = API + process.env.DOTA_URL;
+    const router = require("express").Router();
 
-    // Create a new Dota
-    router.post(DOTA_URL, dotas.create);
-    // Retrieve all Dotas
-    router.get(DOTA_URL, dotas.findAll);     
-    // Retrieve a single Dota with id
+    const API = process.env.API_URL;              
+    const DOTA_URL = process.env.DOTA_ROUTE; // /dotas
+
+    router.post("/", dotas.create);
+    router.get("/", dotas.findAll);
     router.get("/:id", dotas.findOne);
-    // Update a Dota with id
-    router.put(DOTA_URL + "/:id", dotas.update);   
-    // Delete a Dota with id
-    router.delete(DOTA_URL + "/:id", dotas.delete);
+    router.put("/:id", dotas.update);
+    router.delete("/:id", dotas.delete);
+
+    app.use(API + DOTA_URL, router);
 };

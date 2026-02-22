@@ -2,11 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
-import { EmployeeService } from 'src/app/services/employee.service';
-import { InventoryService } from 'src/app/services/inventory.service';
-import { IncidenciesService } from 'src/app/services/incidencies.service';
-import { UnitService } from 'src/app/services/unit.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
+import { IncidenciesService } from 'src/app/services/incidence/incidencies.service';
+import { UnitService } from 'src/app/services/unit/unit.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { addIcons } from 'ionicons';
 import { logOutOutline } from 'ionicons/icons';
 

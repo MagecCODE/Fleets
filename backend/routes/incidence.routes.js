@@ -1,19 +1,19 @@
 require('dotenv').config();
 
-module.exports = app =>{
+module.exports = app => {
     const incidences = require("../controllers/incidence.controller.js");
-    let router = require("express").Router();
-    const API= process.env.API_URL;
-    const INCIDENCES_URL = API + process.env.INCIDENCES_ROUTE;
+    const router = require("express").Router();
 
-    // Create a new Incidence
-    router.post(INCIDENCES_URL, incidences.create);
-    // Retrieve all Incidences
-    router.get(INCIDENCES_URL, incidences.findAll);     
-    // Retrieve a single Incidence with id
-    router.get(INCIDENCES_URL + "/:id", incidences.findOne);
-    // Update a Incidence with id
-    router.put(INCIDENCES_URL + "/:id", incidences.update);   
-    // Delete a Incidence with id
-    router.delete(INCIDENCES_URL + "/:id", incidences.delete);
+    const API = process.env.API_URL; // /api              
+    const INCIDENCES_URL = process.env.INCIDENCES_ROUTE; // /incidencies
+
+    router.post("/", incidences.create);
+    router.get("/", incidences.findAll);
+    router.get("/:id", incidences.findOne);
+    router.get("/unitfleet/:unitfleet", incidences.findByUnitFleet);
+    router.get("/employee/:dni_emp", incidences.findByEmployeeDNI);
+    router.put("/:id", incidences.update);
+    router.delete("/:id", incidences.delete);
+
+    app.use(API + INCIDENCES_URL, router);
 };

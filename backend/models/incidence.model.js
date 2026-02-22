@@ -2,10 +2,14 @@ const {INCIDENCE_TYPES, INCIDENCE_STATUS} = require("../constants/roles");
 
 module.exports = (sequelize, Sequelize) => {
     const Incidence = sequelize.define("incidencies", {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         unitfleet:{
             type: Sequelize.INTEGER,
             allowNull: false,
-            unique: true
         },
         dni_emp:{
             type: Sequelize.STRING,
@@ -32,5 +36,14 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         }
     });
+    
+    /*
+    *** ASOCIACIONES CON LA BBDD Y LOS MODELOS ***
+    */
+    Incidence.associate = function(models) {
+        Incidence.belongsTo(models.units, { foreignKey: "unitfleet", targetKey: "unitfleet" });
+        Incidence.belongsTo(models.employees, { foreignKey: "dni_emp", targetKey: "dni" });
+    };
+
     return Incidence;
 };

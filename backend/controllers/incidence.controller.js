@@ -1,6 +1,6 @@
 const { where } = require("sequelize");
 const db = require("../models");
-const Incidence = db.incidences;
+const Incidence = db.incidencies;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Incidence
@@ -70,29 +70,67 @@ exports.findOne = (req, res) => {
         });
 };
 
-// Update a Incidence by the id in the request
-exports.update = (req, res) => {
-    const id = req.params.id;
-    Incidence.update(req.body, {
-        where: { id: id }
-    })
-        .then(num => {  
-            if (num == 1) {
-                res.send({
-                    message: "Incidence was updated successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update Incidence with id=${id}. Maybe Incidence was not found or req.body is empty!`
-                });
-            }   
+// Find all Incidences by unitfleet
+exports.findByUnitFleet = (req, res) => {
+    const unitfleet = req.params.unitfleet;
+
+    Incidence.findAll({ where: { unitfleet: unitfleet } })
+        .then(data => {
+            res.send(data);
         })
         .catch(err => {
-            console.error("[ERROR] en el método update del controlador de Incidence:", err);
+            console.error("[ERROR] en el método findByUnitFleet del controlador de Incidence:", err);
             res.status(500).send({
-                message: "Error updating Incidence with id=" + id
+                message:
+                    err.message || "Some error occurred while retrieving incidences by unitfleet."
             });
         });
+};
+
+// Find all Incidences by employee DNI
+exports.findByEmployeeDNI = (req, res) => {
+    const dni_emp = req.params.dni_emp;
+    Incidence.findAll({ where: { dni_emp: dni_emp } })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.error("[ERROR] en el método findByEmployeeDNI del controlador de Incidence:", err);
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving incidences by employee DNI."
+            });
+        });
+};
+
+// Update a Incidence by the id in the request
+exports.update = async (req, res) => {
+    const id = req.params.id;
+
+    const data={};
+
+    if(req.body.unitfleet) data.unitfleet = req.body.unitfleet;
+    if(req.body.dni_emp) data.dni_emp = req.body.dni_emp;
+    if(req.body.incidence_type) data.incidence_type = req.body.incidence_type;
+    if(req.body.description) data.description = req.body.description;
+    if(req.body.date) data.date = req.body.date;
+    if(req.body.status) data.status = req.body.status;
+    
+    try{
+        const [num] = await Incidence.update(data, {    
+            where: { id: id }
+        });
+        return res.send(
+            num == 1
+                ? { message: "Incidence was updated successfully." }
+                : { message: `Cannot update Incidence with id=${id}. Maybe Incidence was not found or req.body is empty!` }
+        );
+    }catch(err){
+        console.error("[ERROR] en el método update del controlador de Incidence:", err);
+        res.status(500).send({
+            message: "Error updating Incidence with id=" + id
+        });
+    };       
 };
 
 // Delete a Incidence with the specified id in the request
@@ -102,15 +140,11 @@ exports.delete = (req, res) => {
         where: { id: id }
     })
         .then(num => {
-            if (num == 1) {
-                res.send({          
-                    message: "Incidence was deleted successfully!"
-                });
-            } else {
-                res.send({
-                    message: `Cannot delete Incidence with id=${id}. Maybe Incidence was not found!`
-                });
-            }
+            return res.send(
+                num == 1
+                    ? { message: "Incidence was deleted successfully." }
+                    : { message: `Cannot delete Incidence with id=${id}. Maybe Incidence was not found!` }
+            );    
         })
         .catch(err => {
             console.error("[ERROR] en el método delete del controlador de Incidence:", err);

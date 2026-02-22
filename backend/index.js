@@ -36,8 +36,10 @@ const db = require("./models");
 // Use { force: true } to drop and re-create all tables each time the server starts.
 db.sequelize.sync({ force: false }).then(() => {
   console.log(
-    "[SERVER] -> Welcome to Fleets backend server..... [OK] connected database.",
+    "[SERVER] -> Welcome to Fleets backend server..... [OK] connected database.\n",
   );
+
+  console.log("[DEBUG LOG] MODELOS DISPONIBLES:", Object.keys(db));
 });
 
 // Routes

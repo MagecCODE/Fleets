@@ -6,7 +6,10 @@
 const PROFESSIONS = {
     ENFERMERO: 'Enfermero',
     TES: 'Técnico en Emergencias Sanitarias',
-    FACULTATIVO: 'Facultativo'
+    FACULTATIVO: 'Facultativo',
+    LOGISTIC: 'Botiquín',
+    MRO: 'Mantenimiento',
+    ADMIN: 'Jefatura'
 };
 
 const ROLES = {
@@ -38,7 +41,7 @@ const INVENTORY_STATUS = {
 const UNIT_TYPES = {
     MEDICALIZADA: 'Medicalizada',
     SANITARIZADA: 'Sanitizada',
-    SOPORTE_VITAL_BASICO: 'Soporte Vital Básico',
+    SVB: 'Soporte Vital Básico',
     NO_URGENTE: 'No Urgente'
 };
 

@@ -1,23 +1,30 @@
 require('dotenv').config();
 
-module.exports = app =>{
-    const employees= require("../controllers/employee.controller.js");
-    let router = require("express").Router();
-    const API= process.env.API_URL;
-    const EMPLOYEES_URL = API + process.env.EMPLOYEES_ROUTE;
+module.exports = app => {
+    const employees = require("../controllers/employee.controller.js");
+    const router = require("express").Router();
+    let upload = require('../multer/upload.js');
 
-    // Create a new Employee
-    router.post(EMPLOYEES_URL, employees.create);
-    // Retrieve all Employees
-    router.get(EMPLOYEES_URL, employees.findAll);     
-    // Retrieve a single Employee with id
+    const API = process.env.API_URL;              
+    const EMPLOYEES_URL = process.env.EMPLOYEES_ROUTE; // /employees
+
+    router.post("/login", employees.login);
+    
+    router.post("/", upload.single('file'), employees.create);
+    router.get("/", employees.findAll);
+
+    // RUTAS ESPECÍFICAS PRIMERO
+    router.get("/dni/:dni", employees.findByDni);
+    router.get("/prof/:prof", employees.findByProf);
+
+    // RUTA GENÉRICA AL FINAL
     router.get("/:id", employees.findOne);
-    // Retrieve a single Employee with dni
-    router.get(EMPLOYEES_URL + "/dni/:dni", employees.findByDni);
-    // Retrieve a single Employee with prof
-    router.get(EMPLOYEES_URL + "/prof/:prof", employees.findByProf);
-    // Update a Employee with id
-    router.put("/:id", employees.update);   
-    // Delete a Employee with id
-    router.delete(EMPLOYEES_URL + "/:id", employees.delete);
+
+    router.put("/:id", employees.update);
+    router.delete("/:id", employees.delete);
+
+    router.put("/:id/photo", upload.single('file'), employees.updatePhoto);
+
+
+    app.use(API + EMPLOYEES_URL, router);
 };
