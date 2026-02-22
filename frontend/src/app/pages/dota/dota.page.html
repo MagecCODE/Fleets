@@ -3,8 +3,8 @@
     <ion-grid class="unit-page__grid">
       <div class="unit-page__header">
         <div class="unit-page__header-info">
-          <span class="unit-page__unit-number">UNIDAD {{ unitInfo?.unitfleet }}</span>
-          <span class="unit-page__unit-type">{{ unitInfo?.typefleet}}</span>
+          <span class="unit-page__unit-number">UNIDAD {{unit?.unitfleet}}</span>
+          <span class="unit-page__unit-type">{{unit?.typefleet}}</span>
         </div>
         <ion-button fill="clear" (click)="logout()" class="logout-btn">
           <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
@@ -14,7 +14,6 @@
       <div>
         <ion-row>
           <!-- Tarjetas para mostrar la dotación de la ambulancia -->
-          @if (employees?.length > 0) {
             @for (employee of employees; track employee.dni) {
             <ion-col>
               <ion-card class="employee-card">
@@ -33,33 +32,32 @@
                 <ion-card-content class="employee-card__content">
                   <ion-item class="employee-card__info-item">
                     <ion-text class="employee-card__info-text">
-                      <span class="employee-card__info-label"></span>{{ employee.prof }}
+                      <span class="employee-card__info-label">{{ employee.prof }}</span>
                     </ion-text>
                   </ion-item>
                 </ion-card-content>
                 <!-- Muestra el puesto que ocupa dentro de la dotación -->
                 <div class="employee-card__chips">
-                  @if (employee.id == dotaInfo?.driveId) {
+                  @if (employee.id == dota?.driveId) {
                   <ion-chip class="employee-card__chip"> Conductor </ion-chip>
-                  } @if (employee.id == dotaInfo?.sanitId) {
+                  } @if (employee.id == dota?.sanitId) {
                   <ion-chip class="employee-card__chip">
                     Sanitario
                   </ion-chip>
-                  } @if (employee.id == dotaInfo?.facultId) {
+                  } @if (employee.id == dota?.facultId) {
                   <ion-chip class="employee-card__chip"> Facultativo </ion-chip>
                   }
                 </div>
               </ion-card>
             </ion-col>
             }
-          }  
         </ion-row>
       </div>
 
       <div class="unit-page__section">
         <ion-text class="unit-page__section-title">Inventario</ion-text>
         @for (product of inventory; track product.id){ @if (product.status ==
-        "BAJO") {
+        "Stock Out") {
         <ion-card class="inventory-card">
           <div class="inventory-card__grid">
             <ion-col class="inventory-card__item">
@@ -72,7 +70,7 @@
             </ion-col>
             <ion-col class="inventory-card__item">
               <h5 class="inventory-card__item-label">STOCK</h5>
-              {{ product.status }}
+              {{ product.status}}
             </ion-col>
             <ion-col class="inventory-card__button-col">
               <ion-button class="inventory-card__request-button ion-no-margin ion-no-padding" expand="full"
@@ -124,12 +122,12 @@
               </p>
             </ion-col>
             <ion-col>
-              @if (incident.status == 'PENDIENTE') {
-              <ion-chip class="status-chip status-chip--pendiente">PENDIENTE</ion-chip>
-              } @if (incident.status == 'EN PROCESO') {
-              <ion-chip class="status-chip status-chip--proceso">EN PROCESO</ion-chip>
-              } @if (incident.status == 'RESUELTA') {
-              <ion-chip class="status-chip status-chip--resuelta">RESUELTA</ion-chip>
+              @if (incident.status == 'Pendiente') {
+                <ion-chip class="status-chip status-chip--pendiente">PENDIENTE</ion-chip>
+              } @if (incident.status == 'En proceso') {
+                <ion-chip class="status-chip status-chip--proceso">EN PROCESO</ion-chip>
+              } @if (incident.status == 'Resuelta') {
+                <ion-chip class="status-chip status-chip--resuelta">RESUELTA</ion-chip>
               }
             </ion-col>
           </ion-row>

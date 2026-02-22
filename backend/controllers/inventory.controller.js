@@ -71,21 +71,21 @@ exports.findByID = (req, res) => {
 
 // Retirve inventory by Unit
 exports.findAllByUnit = (req, res) => {
-    const unitfleet = req.query.unitfleet;
-    var condition = unitfleet ? { unitfleet: { [Op.like]: `%${unitfleet}%` } } : null;
-    
+    const unitfleet = req.params.unitfleet;
+    const condition = unitfleet ? { unitfleet: unitfleet } : undefined;
+
     Inventory.findAll({ where: condition })
-    .then(data => {
-        res.send(data);   
-    })
-    .catch(err => {
-        console.error("[ERROR] en el método findAll del controlador de Inventory:", err);
-        res.status(500).send({
-            message:
-                err.message || "Some error occurred while retrieving inventories."
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.error("[ERROR] findAllByUnit Inventory:", err);
+            res.status(500).send({
+                message: err.message || "Error retrieving inventories."
+            });
         });
-    }); 
 };
+
 
 // Find a item of inventory by name
 exports.findByItemName = (req, res) => {

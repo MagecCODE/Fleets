@@ -35,8 +35,8 @@ export class DotaPage implements OnInit {
   employees: Employee[] = [];
   inventory: Inventory[] = [];
   incidence: Incidence[] = [];
-  dotaInfo: Dota | null = null;
-  unitInfo: Unit | null = null;
+  dota: Dota | null = null;
+  unit: Unit | null = null;
 
 
   constructor(private navCtrl: NavController) {
@@ -47,66 +47,83 @@ export class DotaPage implements OnInit {
 
     const employeeId = this.authService.getEmployeeId();   
 
-    console.log("[DEBUG - DOTA] ID del empleado logueado:", employeeId);
-    console.log("[DEBUG - DOTA] Usuario cargado:", this.authService.getUser());
-    console.log("[DEBUG - DOTA] ID empleado:", this.authService.getEmployeeId());
-
-    
-    this.inventoryService.getInventary().subscribe({
-      next: (data) => {
-        this.inventory = data;
-      },
-    });
-
-    this.incidenceService.getIncidencies().subscribe({
-      next: (data) => {
-        this.incidence = data;
-      },
-    });
-    
+    console.log("[DEBUG - DOTA - DotaPage] ID del empleado logueado:", employeeId);
+    console.log("[DEBUG - DOTA - DotaPage] Usuario cargado:", this.authService.getUser());
+    console.log("[DEBUG - DOTA - DotaPage] ID empleado:", this.authService.getEmployeeId());
     this.getDotaInfo(employeeId);     
   }
 
   // Refactored method to fetch Dota info and then load related Unit and Employees
   private getDotaInfo = (employeeId: number | null) => {
-
     if (employeeId) {        
       this.dotaService.getDotaByEmpID(employeeId).subscribe({
-          next: (dotaArray) => {
-            console.log("[DEBUG - DOTA] Dota Array: ",dotaArray);
-            this.dotaInfo = dotaArray[0];
+          next: (dotaResp) => {
+            console.log("[DEBUG - DOTA - DotaPage] Dota Response: ",dotaResp);
 
-            if(!this.dotaInfo) return;
+            this.dota = Array.isArray(dotaResp) ? dotaResp[0] : dotaResp;
 
-            const unitFleet = this.dotaInfo.unitfleet;
+            if(!this.dota) return;
 
-            console.log("[DEBUG - DOTA] Dota unit: ",unitFleet);
+            const unitFleet = this.dota.unitfleet;
+
+            console.log("[DEBUG - DOTA - DotaPage] Dota unit: ",unitFleet);
 
             // 1. Cargar la unidad
             if (unitFleet) {
-              this.unitService.getUnitByUnitFleet(unitFleet).subscribe({
-                next: (unit) => this.unitInfo = unit});
+              this.unitService.getUnitByUnitFleet(unitFleet).subscribe({                
+                next: (uniResp) => {
+                  this.unit = uniResp;
+                  //this.unit = unit;
+                  console.log("[DEBUG - UNIT - DotaPage] Unit en getDotaInfo: ", this.unit);
+                  this.getIncidenceByUnit(unitFleet);
+                  this.getInventoryByUnit(unitFleet);
+                }
+              });
             }
+            
 
             // 2. Cargar SOLO los empleados de la dotación
             const ids = [
-              this.dotaInfo.driveId,
-              this.dotaInfo.sanitId,
-              this.dotaInfo.facultId
+              this.dota.driveId,
+              this.dota.sanitId,
+              this.dota.facultId
             ];
             
             this.employees = [];
+
             ids.forEach(id => {
               if (id) {
                 this.employeeService.getEmployeeById(id).subscribe({
                   next: (emp) => this.employees.push(emp)});
               }
-            });
-          }
+            });           
+          }          
       });
     }
   }
 
+  // Refactor method to fetch incidence of dota
+  private getIncidenceByUnit = (unitfleet:number)=> {
+    this.incidenceService.getIncdicenceByUnitFleet(unitfleet).subscribe({
+      next: (incidenceList) => {
+        console.log("[DEBUG - INCIDENCE - DotaPage] Backend:", incidenceList);
+        this.incidence = incidenceList;
+      }
+    });
+  }
+
+    // Refactor method to fetch incidence of dota
+  private getInventoryByUnit = (unitfleet:number)=> {
+    this.inventoryService.getInventoryByUnitFleet(unitfleet).subscribe({
+      next: (inventoryList) => {
+        console.log("[DEBUG - INVENTORY - DotaPage] Inventory unitFleet:", unitfleet);
+        console.log("[DEBUG - INVENTORY - DotaPage] Backend:", inventoryList);
+        this.inventory = inventoryList;
+      }
+    });
+  } 
+
+  // Logout
   logout() {
     this.authService.logout();
     this.navCtrl.navigateRoot('/login');

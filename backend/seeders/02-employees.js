@@ -65,6 +65,7 @@ module.exports = {
       { name: "Iván", surname: "Torres", dni: "13131313T", password: "pass", email: "ivan.sanitary@example.com", phone: "602000000", prof: "Facultativo", rol: "Sanitary", createdAt: new Date(), updatedAt: new Date() },
       { name: "Marta", surname: "Reyes", dni: "14141414U", password: "pass", email: "marta.sanitary@example.com", phone: "602100100", prof: "Facultativo", rol: "Sanitary", createdAt: new Date(), updatedAt: new Date() },
       { name: "Gonzalo", surname: "Hernández", dni: "15151515V", password: "pass", email: "gonzalo.sanitary@example.com", phone: "602200200", prof: "Facultativo", rol: "Sanitary", createdAt: new Date(), updatedAt: new Date() },
+      { name: "Martín", surname: "Dominguéz", dni: "16161616V", password: "pass", email: "martin.sanitary@example.com", phone: "602300300", prof: "Facultativo", rol: "Sanitary", createdAt: new Date(), updatedAt: new Date() },
   
     ]);
   },
