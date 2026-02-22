@@ -1,0 +1,106 @@
+🟩 1. Cómo importar la colección en Postman
+
+    - Abre Postman
+    - Arriba a la izquierda → Import
+    - Arrastra el archivo ubicado en la carptea postman:
+
+        Fleets-API.postman_collection.json
+
+    - Haz lo mismo con el entorno:
+
+        Fleets-API.postman_environment.json
+
+    - Arriba a la derecha → selecciona el entorno Fleets API Environment
+
+    Listo. Ya tienes todas las rutas preparadas.
+
+🟦 2. Cómo funciona la variable base_url
+
+    En tu entorno tienes:
+        base_url = http://localhost:3000/api
+
+    Esto significa que cualquier ruta como:
+
+        {{base_url}}/units
+
+    se convierte en:
+
+        http://localhost:3000/api/units
+
+    Si mañana cambias el puerto o el prefijo, solo cambias una variable, no todas las rutas.
+
+🟩 3. Cómo probar cada endpoint
+
+    ✔ Unidades
+        - GET todas → /units
+        - GET una → /units/1000
+    ✔ Empleados
+        - GET todos → /employees
+        - GET uno → /employees/1
+    ✔ Dotaciones
+        - GET todas → /dotas
+        - GET una → /dotas/1000
+    ✔ Incidencias
+        - GET todas → /incidencies
+        - POST crear incidencia → ya tienes un body preparado
+
+    Ejemplo del body:
+    {
+    "unitfleet": 1000,
+    "dni_emp": "77777777G",
+    "incidence_type": "Material",
+    "description": "Prueba desde Postman",
+    "date": "2026-02-21T12:00:00Z",
+    "status": "Pendiente"
+    }
+
+    ✔ Inventarios
+        - GET por unidad → /inventories/1000
+        - POST crear item → body listo
+
+🟦 4. Cómo añadir tus propias pruebas (Tests) en Postman
+
+    En cualquier request:
+        - Abre la pestaña Tests
+        - Añade algo como:
+        pm.test("Status 200 OK", function () {
+            pm.response.to.have.status(200);
+        });
+
+        pm.test("Respuesta en JSON", function () {
+            pm.response.to.be.json;
+        });
+
+    Esto te permite validar automáticamente que tu API responde bien.
+
+🟩 5. Cómo duplicar y modificar requests
+
+    Si quieres probar variaciones:
+        - Clic derecho → Duplicate
+        - Cambias el body o la URL
+        - Guardas
+    Así puedes crear:
+        - Incidencias de prueba
+        - Inventarios nuevos
+        - Dotaciones personalizadas
+
+🟦 6. Cómo usar variables dinámicas
+
+    Postman permite generar valores automáticos:
+
+    Ejemplo:
+    {
+    "unitfleet": 1000,
+    "dni_emp": "77777777G",
+    "description": "Incidencia creada en {{timestamp}}"
+    }
+
+    Y en Tests:
+        pm.environment.set("timestamp", Date.now());
+
+🟩 7. Cómo ver la respuesta formateada
+
+    En la parte inferior de Postman:
+        - Pretty → JSON bonito
+        - Raw → texto plano
+        - Preview → HTML si tu API devolviera algo así

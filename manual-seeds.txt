@@ -1,0 +1,99 @@
+📘 MANUAL: Cómo ejecutar los seeds con Sequelize CLI 
+
+  Este manual explica cómo configurar y ejecutar los seeds manualmente en un proyecto Node + Sequelize, usando un archivo de configuración en JavaScript (config.js) en lugar de JSON.
+
+
+✅ 1. Instalar sequelize-cli (obligatorio)
+
+  En el proyecto, ejecutar:
+
+    npm install --save-dev sequelize-cli
+
+  Comprobar que funciona:
+
+    npx sequelize --help
+
+
+✅ 2. Crear archivo .sequelizerc en la raíz del proyecto
+  Este archivo le dice a Sequelize CLI dónde están los modelos, seeds, migraciones y el archivo de configuración JS.
+
+  Contenido:
+
+    const path = require('path');
+
+    module.exports = {
+      'config': path.resolve('config', 'config.js'),
+      'models-path': path.resolve('models'),
+      'seeders-path': path.resolve('seeders'),
+      'migrations-path': path.resolve('migrations')
+    };
+
+
+✅ 3. Crear carpeta /migrations
+
+  Aunque no se usen, Sequelize CLI la necesita.
+
+  mkdir migrations, o en la raiz de la carpeta backend la creamos desde el IDE.
+
+
+✅ 4. Crear archivo config/config.js compatible con Sequelize CLI
+
+  Este archivo sí funciona con variables de entorno y con sequelize-cli.
+
+  Contenido:
+
+    require('dotenv').config();
+
+    module.exports = {
+      development: {
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        host: process.env.DB_HOST,
+        dialect: process.env.DB_DIALECT
+      }
+    };
+
+  ⚠️ Importante: las claves deben llamarse exactamente:
+
+    - username
+    - password
+    - database
+    - host
+    - dialect
+
+✅ 5. Configurar scripts en package.json
+
+  Añadir:
+    "scripts": {
+      "seed": "npx sequelize db:seed:all",
+      "seed:undo": "npx sequelize db:seed:undo:all",
+      "reset-db": "echo 🧹 Borrando seeds... && npx sequelize db:seed:undo:all && echo 📦 Ejecutando seeds... && npx sequelize db:seed:all && echo ✔ Base de datos regenerada correctamente"  
+    }
+
+
+
+✅ 6. Ejecutar los seeds manualmente
+
+  Borrar todos los seeds:
+    npm run seed:undo
+
+  Insertar todos los seeds:
+    npm run seed
+
+  Reset completo (borrar + insertar):
+    npm run reset-db
+
+
+✅ 7. Requisitos para que funcione
+
+  - Tener .sequelizerc apuntando a config.js
+  - Tener carpeta /migrations
+  - Tener sequelize-cli instalado localmente
+  - Tener un archivo config/config.js válido
+  - Tener las variables en .env:
+      DB_HOST=localhost
+      DB_USER=root
+      DB_PASSWORD=tu_password
+      DB_NAME=db_fleets
+      DB_DIALECT=mysql

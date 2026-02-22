@@ -1,0 +1,229 @@
+{
+  "info": {
+    "name": "Fleets API",
+    "_postman_id": "fleets-api-collection",
+    "description": "Colección completa para probar la API de flota sanitaria",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    
+    {
+      "name": "GET - Todas las unidades",
+      "request": { "method": "GET", "url": "{{base_url}}/units" }
+    },
+    {
+      "name": "GET - Unidad por ID",
+      "request": { "method": "GET", "url": "{{base_url}}/units/3010" }
+    },
+    {
+      "name": "POST - Crear unidad",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"unitFleet\": 3010,\n  \"typeFleet\": \"Soporte Vital Básio\"\n}"
+        },
+        "url": "{{base_url}}/units"
+      }
+    },
+    {
+      "name": "PUT - Actualizar unidad",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"typeFleet\": \"No Urgente\"\n}"
+        },
+        "url": "{{base_url}}/units/3010"
+      }
+    },
+    {
+      "name": "DELETE - Eliminar unidad",
+      "request": { "method": "DELETE", "url": "{{base_url}}/units/3010" }
+    },
+    {
+      "name": "GET - Todos los empleados",
+      "request": { "method": "GET", "url": "{{base_url}}/employees" }
+    },
+    {
+      "name": "GET - Empleado por ID",
+      "request": { "method": "GET", "url": "{{base_url}}/employees/26" }
+    },
+    {
+      "name": "GET - Empleado por profesión",
+      "request": { "method": "GET", "url": "{{base_url}}/employees/prof/Técnico en Emergencias Sanitarias" }
+    },
+    {
+      "name": "GET - Empleado por DNI",
+      "request": { "method": "GET", "url": "{{base_url}}/employees/dni/11111111A" }
+    },
+    {
+      "name": "POST - Crear empleado",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"dni\": \"00000000A\",\n  \"name\": \"Samuel\",\n  \"surname\": \"Alonso\",\n  \"prof\": \"Jefatura\",\n  \"password\": \"pass\",\n  \"email\": \"samuel.admin@example.com\"\n,\n  \"phone\": \"600000000\"\n,  \"role\": \"Admin\"\n}"
+        },
+        "url": "{{base_url}}/employees"
+      }
+    },
+      {
+      "name": "POST - Login empleado",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"dni\": \"00000000A\",\n  \"password\": \"pass\"\n}"
+        },
+        "url": "{{base_url}}/employees/login"
+      }
+    },
+    {
+      "name": "PUT - Actualizar empleado",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"prof\": \"Facultativo\"\n}"
+        },
+        "url": "{{base_url}}/employees/26"
+      }
+    },
+    {
+      "name": "DELETE - Eliminar empleado",
+      "request": { "method": "DELETE", "url": "{{base_url}}/employees/26" }
+    },
+
+    {
+      "name": "GET - Todas las dotaciones",
+      "request": { "method": "GET", "url": "{{base_url}}/dotas" }
+    },
+    {
+      "name": "GET - Dotación por unidad",
+      "request": { "method": "GET", "url": "{{base_url}}/dotas/3010" }
+    },
+    {
+      "name": "POST - Crear dotación",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"unitfleet\": 3010,\n  \"driveId\": 26,\n  \"sanitId\": 27\n}"
+        },
+        "url": "{{base_url}}/dotas"
+      }
+    },
+    {
+      "name": "PUT - Actualizar dotación",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"driveId\": 28\n}"
+        },
+        "url": "{{base_url}}/dotas/41"
+      }
+    },
+    {
+      "name": "DELETE - Eliminar dotación",
+      "request": { "method": "DELETE", "url": "{{base_url}}/dotas/41" }
+    },
+    {
+      "name": "GET - Todas las incidencias",
+      "request": { "method": "GET", "url": "{{base_url}}/incidencies" }
+    },
+    {
+      "name": "GET - Incidencia por ID",
+      "request": { "method": "GET", "url": "{{base_url}}/incidencies/20" }
+    },
+    {
+      "name": "GET - Incidencias por unidad",
+      "request": { "method": "GET", "url": "{{base_url}}/incidencies/unitfleet/1000" }
+    },
+    {
+      "name": "GET - Incidencias por empleado",
+      "request": { "method": "GET", "url": "{{base_url}}/incidencies/employee/77777777G" }
+    },
+    {
+      "name": "POST - Crear incidencia",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"unitfleet\": 1000,\n  \"dni_emp\": \"77777777G\",\n  \"incidence_type\": \"Material\",\n  \"description\": \"Prueba desde Postman\",\n  \"date\": \"2026-02-21T12:00:00Z\",\n  \"status\": \"Pendiente\"\n}"
+        },
+        "url": "{{base_url}}/incidencies"
+      }
+    },
+    {
+      "name": "PUT - Actualizar incidencia",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Resuelta\"\n}"
+        },
+        "url": "{{base_url}}/incidencies/1"
+      }
+    },
+    {
+      "name": "DELETE - Eliminar incidencia",
+      "request": { "method": "DELETE", "url": "{{base_url}}/incidencies/1" }
+    },
+    {
+      "name": "GET - Todos los inventarios",
+      "request": { "method": "GET", "url": "{{base_url}}/inventories"}
+    },
+    {
+      "name": "GET - Inventario por ID",
+      "request": { "method": "GET", "url": "{{base_url}}/inventories/721" }
+    },
+    {
+      "name": "GET - Inventario por unidad",
+      "request": { "method": "GET", "url": "{{base_url}}/inventories/unit/1000" }
+    },
+    {
+      "name": "GET - Inventario por item",
+      "request": { "method": "GET", "url": "{{base_url}}/inventories/item/Guantes" }
+    },
+    {
+      "name": "POST - Crear item de inventario",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"unitfleet\": 1000,\n  \"dni_emp\": \"33333333C\",\n  \"item_name\": \"Guantes\",\n  \"quantity\": 50,\n  \"status\": \"Stock\"\n}"
+        },
+        "url": "{{base_url}}/inventories"
+      }
+    },
+    {
+      "name": "PUT - Actualizar item inventario",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"quantity\": 80,\n  \"status\": \"Stock Out\"\n}"
+        },
+        "url": "{{base_url}}/inventories/721"
+      }
+    },
+    {
+      "name": "DELETE - Eliminar item inventario",
+      "request": { "method": "DELETE", "url": "{{base_url}}/inventories/721" }
+    }
+
+  ]
+}
