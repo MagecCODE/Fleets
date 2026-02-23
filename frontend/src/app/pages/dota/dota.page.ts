@@ -112,7 +112,7 @@ export class DotaPage implements OnInit {
     });
   }
 
-    // Refactor method to fetch incidence of dota
+  // Refactor method to fetch inventory of dota
   private getInventoryByUnit = (unitfleet:number)=> {
     this.inventoryService.getInventoryByUnitFleet(unitfleet).subscribe({
       next: (inventoryList) => {

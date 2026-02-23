@@ -13,15 +13,23 @@ export class InventoryService {
   private INVENTORY_SERVER_URL = API_FLEET.INVENTORY;
 
   // Fetch all Invenotry form database
-  getInventary(): Observable<any[]> {
-    return this.http
-      .get<any>(this.INVENTORY_SERVER_URL)
-      .pipe(map((response) => response.products));
+  getInventary(): Observable<Inventory[]> {
+    return this.http.get<Inventory[]>(this.INVENTORY_SERVER_URL);
   }
 
    // Fetch incidence by unitfleet
     getInventoryByUnitFleet(unitFleet: number): Observable<Inventory[]> {  
       return this.http.get<Inventory[]>(`${this.INVENTORY_SERVER_URL}/unit/${unitFleet}`);
     }
+
+   // Add new item
+   addInventoryItem(item: any): Observable<any> {
+     return this.http.post<any>(this.INVENTORY_SERVER_URL, item);
+   }
+
+   // Delete item
+   deleteInventoryItem(id: number): Observable<any> {
+     return this.http.delete<any>(`${this.INVENTORY_SERVER_URL}/${id}`);
+   }
   
 }

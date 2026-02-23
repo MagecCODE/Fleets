@@ -146,7 +146,7 @@
                                 @if (!isEditing) {
                                 <ion-button class="action-btn-delete" (click)="deleteIncident(selectedIncident)">
                                     <ion-icon slot="start" name="trash-outline"></ion-icon>
-                                    Borrar
+                                    Eliminar
                                 </ion-button>
                                 <ion-button class="action-btn-edit" (click)="editIncident()">
                                     <ion-icon slot="start" name="create-outline"></ion-icon>
@@ -172,7 +172,7 @@
 
     </div>
 
-    <!-- Custom Delete Alert Modal -->
+    <!-- Ventana de alerta para eliminar incidencias -->
     <ion-modal [isOpen]="isDeleteAlertOpen" (didDismiss)="cancelDelete()" class="custom-alert-modal">
         <ng-template>
             <div class="custom-alert-container">
@@ -189,7 +189,7 @@
 
                     <div class="custom-alert-card__actions">
                         <ion-button expand="block" class="delete-btn" (click)="confirmDelete()">
-                            Sí, Borrar Incidencia
+                            Eliminar
                         </ion-button>
                         <ion-button expand="block" class="cancel-btn" (click)="cancelDelete()">
                             Cancelar

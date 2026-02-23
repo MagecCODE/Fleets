@@ -1,0 +1,185 @@
+<ion-content>
+    <div class="inventory-page">
+        <ion-grid class="inventory-page__grid">
+            <div class="inventory-page__header">
+                <div class="inventory-page__header-info">
+                    <span class="inventory-page__title">INVENTARIO</span>
+                </div>
+                <ion-button fill="clear" (click)="logout()" class="logout-btn">
+                    <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+                </ion-button>
+            </div>
+
+            <div class="inventory-page__section">
+                <div class="inventory-page__section-header">
+                    <ion-text class="inventory-page__section-title">Lista de artículos</ion-text>
+                    <ion-searchbar class="inventory-searchbar" [(ngModel)]="searchTerm" (ionInput)="resetPagination()"
+                        placeholder="Buscar artículo...">
+                    </ion-searchbar>
+                </div>
+                <ion-grid class="inventory-table">
+                    <!-- Table Header -->
+                    <ion-row class="inventory-table__row inventory-table__row--header">
+                        <ion-col size="1">
+                            <p class="inventory-table__cell-text"></p>
+                        </ion-col>
+                        <ion-col size="4">
+                            <p class="inventory-table__cell-text">ARTÍCULO</p>
+                        </ion-col>
+                        <ion-col size="2">
+                            <p class="inventory-table__cell-text ion-text-center">UNIDAD</p>
+                        </ion-col>
+                        <ion-col size="2">
+                            <p class="inventory-table__cell-text ion-text-center">CANTIDAD</p>
+                        </ion-col>
+                        <ion-col size="3" class="ion-text-end">
+                            <p class="inventory-table__cell-text">ESTADO</p>
+                        </ion-col>
+                    </ion-row>
+
+                    <!-- Table Rows -->
+                    @for (item of paginatedInventory; track item.id) {
+                    <ion-row class="inventory-table__row">
+                        <ion-col size="1" class="ion-text-center">
+                            <ion-checkbox class="inventory-checkbox" [checked]="isSelected(item.id)"
+                                (ionChange)="toggleSelection(item.id)">
+                            </ion-checkbox>
+                        </ion-col>
+                        <ion-col size="4">
+                            <p class="inventory-table__cell-text">{{
+                                item.item_name }}</p>
+                        </ion-col>
+                        <ion-col size="2" class="ion-text-center">
+                            <p class="inventory-table__cell-text">{{
+                                item.unitfleet }}</p>
+                        </ion-col>
+                        <ion-col size="2" class="ion-text-center">
+                            <p class="inventory-table__cell-text">{{
+                                item.quantity }}</p>
+                        </ion-col>
+                        <ion-col size="3" class="ion-text-end">
+                            <ion-chip class="status-chip" [ngClass]="{
+                'status-chip--pendiente': item.status === 'Stock Out',
+                'status-chip--resuelta': item.status === 'Stock'
+              }">{{ item.status === 'Stock Out' ? 'SIN STOCK' : 'EN STOCK' }}</ion-chip>
+                        </ion-col>
+                    </ion-row>
+                    }
+                </ion-grid>
+
+                <!-- Pagination Controls -->
+                <div class="inventory-pagination">
+                    <span class="inventory-pagination__info">Página {{ currentPage }} de {{ totalPages }}</span>
+                    <div class="inventory-pagination__buttons">
+                        <ion-button fill="clear" (click)="firstPage()" [disabled]="currentPage === 1"
+                            class="inventory-pagination__btn">
+                            <ion-icon slot="icon-only" name="play-skip-back-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="clear" (click)="prevPage()" [disabled]="currentPage === 1"
+                            class="inventory-pagination__btn">
+                            <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="clear" (click)="nextPage()" [disabled]="currentPage === totalPages"
+                            class="inventory-pagination__btn">
+                            <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+                        </ion-button>
+                        <ion-button fill="clear" (click)="lastPage()" [disabled]="currentPage === totalPages"
+                            class="inventory-pagination__btn">
+                            <ion-icon slot="icon-only" name="play-skip-forward-outline"></ion-icon>
+                        </ion-button>
+                    </div>
+                </div>
+
+                <!-- Dynamic Actions -->
+                <div class="inventory-actions">
+                    @if (showDeleteButton) {
+                    <ion-button class="inventory-page__delete-button" (click)="deleteItems()">
+                        <ion-icon slot="start" name="trash-outline"></ion-icon>
+                        Eliminar
+                    </ion-button>
+                    } @else {
+                    <ion-button class="inventory-page__new-incidence-button" (click)="addItem()">
+                        Añadir
+                    </ion-button>
+                    }
+                </div>
+            </div>
+        </ion-grid>
+    </div>
+
+    <!-- Custom Add Alert Modal -->
+    <ion-modal [isOpen]="isAddAlertOpen" (didDismiss)="cancelAdd()" class="custom-alert-modal">
+        <ng-template>
+            <div class="custom-alert-container">
+                <ion-card class="custom-alert-card">
+                    <div class="custom-alert-card__header">
+                        <h1>Añadir Artículo</h1>
+                    </div>
+
+                    <div class="custom-alert-card__form">
+                        <div class="form-field">
+                            <label>Nombre del Artículo</label>
+                            <ion-input type="text" [(ngModel)]="newItem.item_name"
+                                placeholder="Ej. Mascarillas"></ion-input>
+                        </div>
+                        <div class="form-field">
+                            <label>Cantidad</label>
+                            <ion-input type="number" [(ngModel)]="newItem.quantity" min="1"></ion-input>
+                        </div>
+                        <div class="form-field">
+                            <label>Estado</label>
+                            <ion-select [(ngModel)]="newItem.status" interface="popover">
+                                <ion-select-option value="Stock">EN STOCK</ion-select-option>
+                                <ion-select-option value="Stock Out">SIN STOCK</ion-select-option>
+                            </ion-select>
+                        </div>
+                    </div>
+
+                    <div class="custom-alert-card__actions">
+                        <ion-button expand="block" class="save-btn" (click)="saveNewItem()"
+                            [disabled]="!newItem.item_name || newItem.quantity < 1">
+                            Guardar
+                        </ion-button>
+                        <ion-button expand="block" class="cancel-btn" (click)="cancelAdd()">
+                            Cancelar
+                        </ion-button>
+                    </div>
+                </ion-card>
+            </div>
+        </ng-template>
+    </ion-modal>
+
+    <!-- Ventana de alerta para eliminar artículos -->
+    <ion-modal [isOpen]="isDeleteAlertOpen" (didDismiss)="cancelDelete()" class="custom-alert-modal">
+        <ng-template>
+            <div class="custom-alert-container">
+                <ion-card class="custom-alert-card">
+                    <div class="custom-alert-card__header">
+                        <h1>Confirmar borrado</h1>
+                    </div>
+                    @if(selectedIds.size <= 1) { <p class="custom-alert-card__form">
+                        ¿Estás seguro de que deseas eliminar el artículo seleccionado?
+                        <br><br>Esta acción no se puede deshacer.
+                        </p>
+                        } @else {
+                        <p class="custom-alert-card__form">
+                            ¿Estás seguro de que deseas eliminar los artículos
+                            seleccionados?
+                            <br><br>Esta acción no se puede deshacer.
+                        </p>
+                        }
+
+                        <div class="custom-alert-card__actions">
+                            <ion-button expand="block" class="save-btn" (click)="confirmDelete()">
+                                Eliminar
+                            </ion-button>
+                            <ion-button expand="block" class="cancel-btn" (click)="cancelDelete()">
+                                Cancelar
+                            </ion-button>
+                        </div>
+                </ion-card>
+            </div>
+        </ng-template>
+    </ion-modal>
+
+</ion-content>
