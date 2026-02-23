@@ -1,6 +1,7 @@
 📘 MANUAL: Cómo ejecutar los seeds con Sequelize CLI 
 
   Este manual explica cómo configurar y ejecutar los seeds manualmente en un proyecto Node + Sequelize, usando un archivo de configuración en JavaScript (config.js) en lugar de JSON.
+  Los comandos se ejecutan en el directorio de /backend
 
 
 ✅ 1. Instalar sequelize-cli (obligatorio)
@@ -71,9 +72,10 @@
       "reset-db": "echo 🧹 Borrando seeds... && npx sequelize db:seed:undo:all && echo 📦 Ejecutando seeds... && npx sequelize db:seed:all && echo ✔ Base de datos regenerada correctamente"  
     }
 
+✅ 6. Ejecutar el comando:
+    npm start
 
-
-✅ 6. Ejecutar los seeds manualmente
+✅ 7. Ejecutar los seeds manualmente
 
   Borrar todos los seeds:
     npm run seed:undo
@@ -85,7 +87,7 @@
     npm run reset-db
 
 
-✅ 7. Requisitos para que funcione
+✅ 8. Requisitos para que funcione
 
   - Tener .sequelizerc apuntando a config.js
   - Tener carpeta /migrations

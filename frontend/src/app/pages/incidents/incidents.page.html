@@ -1,0 +1,203 @@
+<ion-content>
+    <div class="incidents-page">
+        <!-- Wrapper para las dos columnas -->
+        <ion-grid class="incidents-page__grid">
+            <div class="incidents-page__header">
+                <div class="incidents-page__header-info">
+                    <span class="incidents-page__title">INCIDENCIAS</span>
+                </div>
+                <ion-button fill="clear" (click)="logout()" class="logout-btn">
+                    <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+                </ion-button>
+            </div>
+            <ion-row>
+                <!-- Columna Izquierda: Listado -->
+                <ion-col size="12" [sizeMd]="selectedIncident ? '6' : '12'" class="incidents-list-col">
+                    <div class="incidents-list">
+                        @for (incident of incidents; track incident.id) {
+                        <ion-card class="incident-card-item" [class.selected]="selectedIncident?.id === incident.id"
+                            (click)="selectIncident(incident)">
+                            <div class="incident-card-item__content">
+                                <div class="incident-card-item__header">
+                                    <div class="incident-card-item__left-group">
+                                        <div class="incident-card-item__number-group">
+                                            <span class="incident-card-item__type--n">Nº </span>
+                                            <span class="incident-card-item__type--number">{{ incident.id }}</span>
+                                        </div>
+                                        <div class="incident-card-item__title-group">
+                                            <span class="incident-card-item__type">{{ incident.incidence_type }}</span>
+                                            <span class="incident-card-item__unit">Unidad {{ incident.unitfleet
+                                                }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="incident-card-item__right-group">
+                                        <span class="incident-card-item__date">{{ incident.date | date: 'dd/MM/yyyy'
+                                            }}</span>
+                                        <div class="incident-card-item__status">
+                                            @if (incident.status.toLowerCase() === 'pendiente') {
+                                            <ion-chip class="status-chip status-chip--pendiente">PENDIENTE</ion-chip>
+                                            }
+                                            @if (incident.status.toLowerCase() === 'en proceso') {
+                                            <ion-chip class="status-chip status-chip--proceso">EN PROCESO</ion-chip>
+                                            }
+                                            @if (incident.status.toLowerCase() === 'resuelta') {
+                                            <ion-chip class="status-chip status-chip--resuelta">RESUELTA</ion-chip>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-card>
+                        }
+                    </div>
+                </ion-col>
+
+                <!-- Columna Derecha: Detalles (Solo se muestra si hay un incidente seleccionado) -->
+                @if (selectedIncident) {
+                <ion-col size="12" sizeMd="6" class="incident-details-col">
+                    <div class="details-card">
+                        <div class="details-card__header">
+                            <h2 class="details-card__title">
+                                Incidencia Nº{{ selectedIncident.id }} - {{ selectedIncident.incidence_type }}
+                            </h2>
+                        </div>
+
+                        <div class="details-card__content">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="12">
+                                        <div class="details-card__field">
+                                            <span class="details-card__label">Estado Actual:</span>
+
+                                            <!-- Modo Lectura -->
+                                            @if (!isEditing) {
+                                            @if (selectedIncident.status.toLowerCase() === 'pendiente') {
+                                            <ion-chip
+                                                class="status-chip-details status-chip-details--pendiente">PENDIENTE</ion-chip>
+                                            }
+                                            @if (selectedIncident.status.toLowerCase() === 'en proceso') {
+                                            <ion-chip class="status-chip-details status-chip-details--proceso">EN
+                                                PROCESO</ion-chip>
+                                            }
+                                            @if (selectedIncident.status.toLowerCase() === 'resuelta') {
+                                            <ion-chip
+                                                class="status-chip-details status-chip-details--resuelta">RESUELTA</ion-chip>
+                                            }
+                                            }
+                                            <!-- Modo Edición -->
+                                            @if (isEditing) {
+                                            <ion-select class="status-select"
+                                                [class.status-select--pendiente]="editingIncident!.status.toLowerCase() === 'pendiente'"
+                                                [class.status-select--proceso]="editingIncident!.status.toLowerCase() === 'en proceso'"
+                                                [class.status-select--resuelta]="editingIncident!.status.toLowerCase() === 'resuelta'"
+                                                [(ngModel)]="editingIncident!.status" interface="popover">
+                                                <ion-select-option value="Pendiente">PENDIENTE</ion-select-option>
+                                                <ion-select-option value="En proceso">EN PROCESO</ion-select-option>
+                                                <ion-select-option value="Resuelta">RESUELTA</ion-select-option>
+                                            </ion-select>
+                                            }
+                                        </div>
+                                    </ion-col>
+                                    <ion-col size="12">
+                                        <div class="details-card__field">
+                                            <span class="details-card__label">Unidad:</span>
+                                            <span class="details-card__value">{{ selectedIncident.unitfleet }}</span>
+                                        </div>
+                                    </ion-col>
+                                    <ion-col size="12">
+                                        <div class="details-card__field">
+                                            <span class="details-card__label">DNI Empleado:</span>
+                                            <span class="details-card__value">{{ selectedIncident.dni_emp }}</span>
+                                        </div>
+                                    </ion-col>
+                                    <ion-col size="6">
+                                        <div class="details-card__field">
+                                            <span class="details-card__label">Fecha:</span>
+                                            <span class="details-card__value">{{ selectedIncident.date | date:
+                                                'dd/MM/yyyy' }}</span>
+                                        </div>
+                                    </ion-col>
+                                    <ion-col size="6">
+                                        <div class="details-card__field">
+                                            <span class="details-card__label">Hora:</span>
+                                            <span class="details-card__value">{{ selectedIncident.date | date:
+                                                'HH:mm' }}</span>
+                                        </div>
+                                    </ion-col>
+                                    <ion-col size="12">
+                                        <div class="details-card__field details-card__field--desc">
+                                            <span class="details-card__label">Descripción:</span>
+                                            @if (!isEditing) {
+                                            <div class="details-card__value-box">
+                                                {{ selectedIncident.description }}
+                                            </div>
+                                            } @else {
+                                            <ion-textarea
+                                                class="details-card__value-box details-card__value-box--editable"
+                                                [(ngModel)]="editingIncident!.description" rows="5" autoGrow="true">
+                                            </ion-textarea>
+                                            }
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+
+                            <div class="details-card__actions">
+                                @if (!isEditing) {
+                                <ion-button class="action-btn-delete" (click)="deleteIncident(selectedIncident)">
+                                    <ion-icon slot="start" name="trash-outline"></ion-icon>
+                                    Borrar
+                                </ion-button>
+                                <ion-button class="action-btn-edit" (click)="editIncident()">
+                                    <ion-icon slot="start" name="create-outline"></ion-icon>
+                                    Editar
+                                </ion-button>
+                                } @else {
+                                <ion-button class="action-btn-cancel" (click)="cancelEdit()">
+
+                                    Cancelar
+                                </ion-button>
+                                <ion-button class="action-btn-save" (click)="saveEdit()">
+
+                                    Guardar
+                                </ion-button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </ion-col>
+                }
+            </ion-row>
+        </ion-grid>
+
+    </div>
+
+    <!-- Custom Delete Alert Modal -->
+    <ion-modal [isOpen]="isDeleteAlertOpen" (didDismiss)="cancelDelete()" class="custom-alert-modal">
+        <ng-template>
+            <div class="custom-alert-container">
+                <ion-card class="custom-alert-card">
+                    <div class="custom-alert-card__header">
+                        <h1>Confirmar borrado</h1>
+                    </div>
+
+                    <p class="custom-alert-card__text">
+                        ¿Deseas confirmar el borrado de la <strong>INCIDENCIA Nº {{ incidentToDelete?.id
+                            }}</strong>?<br><br>
+                        Esta acción no se puede deshacer.
+                    </p>
+
+                    <div class="custom-alert-card__actions">
+                        <ion-button expand="block" class="delete-btn" (click)="confirmDelete()">
+                            Sí, Borrar Incidencia
+                        </ion-button>
+                        <ion-button expand="block" class="cancel-btn" (click)="cancelDelete()">
+                            Cancelar
+                        </ion-button>
+                    </div>
+                </ion-card>
+            </div>
+        </ng-template>
+    </ion-modal>
+
+</ion-content>

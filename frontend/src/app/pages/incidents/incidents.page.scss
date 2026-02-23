@@ -1,0 +1,490 @@
+ion-content {
+    --background: linear-gradient(60deg, var(--ion-blue-text), var(--ion-blue-subtext));
+}
+
+.incidents-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+    color: var(--ion-blue-text);
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0 10px 14px 10px;
+    }
+
+    &__header-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    &__title {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--ion-blue-background);
+        line-height: 1;
+        text-transform: uppercase;
+    }
+
+    .logout-btn {
+        --color: var(--ion-blue-background);
+        --padding-start: 8px;
+        --padding-end: 8px;
+        margin: 0;
+        height: 30px;
+        font-size: 1.3rem;
+        padding: 12px 0px;
+    }
+
+    &__grid {
+        width: 100%;
+        max-width: 1400px;
+        padding: 0 20px;
+        margin: 0 auto;
+        flex: 1;
+    }
+}
+
+.incidents-list-col {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-right: 10px;
+
+    /* Custom scrollbar para la lista */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--ion-blue-highlight);
+        border-radius: 10px;
+    }
+}
+
+.incident-card-item {
+    background: var(--ion-blue-background);
+    border-radius: 15px;
+    box-shadow: 0 0rem 0.5rem rgb(0 0 0 / 30%);
+    margin: 0 0 12px 0;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 2px solid transparent;
+
+    &:hover {
+        transform: scale(0.99);
+        box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
+    }
+
+    &.selected {
+        border-color: var(--ion-blue-subtext);
+        box-shadow: inset 0 0rem 1rem rgba(29, 53, 87, 0.6);
+    }
+
+    &__content {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    &__left-group {
+        display: flex;
+        gap: 45px;
+        align-items: center;
+    }
+
+    &__number-group {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    &__type--n {
+        font-weight: 300;
+        color: var(--ion-blue-subtext);
+        font-size: 1rem;
+        text-transform: uppercase;
+        line-height: 1;
+    }
+
+    &__type--number {
+        font-weight: 100;
+        color: var(--ion-blue-subtext);
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        line-height: 1;
+    }
+
+    &__title-group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__right-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+    }
+
+    &__type {
+        font-weight: 700;
+        color: var(--ion-blue-text);
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        line-height: 1;
+    }
+
+    &__unit {
+        font-size: 1rem;
+        color: var(--ion-blue-subtext);
+        margin-top: 6px;
+        font-weight: 600;
+    }
+
+    &__date {
+        font-size: 1.1rem;
+        font-weight: 300;
+        color: var(--ion-blue-subtext);
+        line-height: 1;
+        margin-top: 2px;
+    }
+}
+
+.incident-details-col {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.details-card {
+    background: transparent;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+    }
+
+    &__title {
+        color: var(--ion-blue-background);
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+    }
+
+    &__content {
+        padding-top: 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+
+        &--desc {
+            flex: 1;
+        }
+    }
+
+    &__label {
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: var(--ion-blue-background);
+        opacity: 0.8;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+
+    &__value {
+        border-radius: 12px;
+        padding: 15px;
+        font-size: 1.2rem;
+        color: var(--ion-blue-background);
+        font-weight: 500;
+        border: 1px solid rgba(232, 245, 233, 0.4);
+    }
+
+    &__value-box {
+        border-radius: 12px;
+        padding: 15px;
+        font-size: 1.1rem;
+        color: var(--ion-blue-background);
+        line-height: 1.5;
+        min-height: 220px;
+        border: 1px solid rgba(232, 245, 233, 0.4);
+    }
+
+    &__value-box--editable {
+        padding: 0px 15px;
+        background: rgba(232, 245, 233, 0.1);
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid rgba(232, 245, 233, 0.4);
+    }
+}
+
+.action-btn-delete {
+    --background: var(--ion-red-action);
+    --color: var(--ion-blue-background);
+    --border-radius: 12px;
+    --box-shadow: none;
+    font-weight: bold;
+    height: 55px;
+    min-width: 140px;
+}
+
+.action-btn-edit {
+    --background: var(--ion-blue-highlight);
+    --color: var(--ion-blue-text);
+    --border-radius: 12px;
+    --box-shadow: none;
+    font-weight: bold;
+    height: 55px;
+    min-width: 140px;
+}
+
+.action-btn-save {
+    --background: var(--ion-blue-highlight);
+    --color: var(--ion-blue-text);
+    --border-radius: 12px;
+    --box-shadow: none;
+    font-weight: bold;
+    height: 55px;
+    min-width: 140px;
+}
+
+.action-btn-cancel {
+    --background: var(--ion-red-action);
+    --color: var(--ion-blue-background);
+    --border-radius: 12px;
+    --box-shadow: none;
+    font-weight: bold;
+    height: 55px;
+    min-width: 140px;
+}
+
+.empty-state {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--ion-blue-background);
+    opacity: 0.7;
+    text-align: center;
+    padding: 40px;
+
+    ion-icon {
+        font-size: 5rem;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+}
+
+// Chips de la columna de incidencias
+.status-chip {
+    --color: var(--ion-blue-text);
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+
+    &--pendiente {
+        --background: var(--ion-red-action);
+        color: var(--ion-blue-background);
+    }
+
+    &--proceso {
+        --background: #ffa500;
+    }
+
+    &--resuelta {
+        --background: #2dd36f;
+    }
+}
+
+// Chips de la tarjeta de detalles
+.status-chip-details {
+    --color: var(--ion-blue-text);
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 1rem;
+    border-radius: 12px;
+    padding: 0px 15px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+
+    &--pendiente {
+        --background: var(--ion-red-action);
+        color: var(--ion-blue-background);
+    }
+
+    &--proceso {
+        --background: #ffa500;
+    }
+
+    &--resuelta {
+        --background: #2dd36f;
+    }
+}
+
+// Menú desplegable de selección de estado
+.status-select {
+    --placeholder-color: var(--ion-blue-text);
+    --placeholder-opacity: 1;
+    color: var(--ion-blue-text);
+    font-weight: 700;
+    margin-top: 0px;
+    text-transform: uppercase;
+    font-size: 1rem;
+    border-radius: 12px;
+    padding: 0px 15px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+
+
+    &--pendiente {
+        &::part(icon) {
+            color: var(--ion-blue-background);
+            margin-left: 8px;
+        }
+
+        background: var(--ion-red-action);
+        color: var(--ion-blue-background);
+    }
+
+    &--proceso {
+        &::part(icon) {
+            color: var(--ion-blue-text);
+            margin-left: 8px;
+        }
+
+        background: #ffa500;
+    }
+
+    &--resuelta {
+        &::part(icon) {
+            color: var(--ion-blue-text);
+            margin-left: 8px;
+        }
+
+        background: #2dd36f;
+    }
+}
+
+ion-modal.custom-alert-modal {
+    --background: transparent;
+    --box-shadow: none;
+
+    &::part(content) {
+        background: transparent;
+        box-shadow: none;
+    }
+}
+
+.custom-alert-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    width: 100%;
+}
+
+.custom-alert-card {
+    padding: 30px 30px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 20px;
+    background: var(--ion-blue-background);
+    box-shadow: 0rem 0rem 2rem rgb(0 0 0 / 50%);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        margin-bottom: 10px;
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--ion-blue-text);
+            margin: 0;
+            margin-bottom: 20px;
+        }
+    }
+
+    &__text {
+        font-size: 1.2rem;
+        color: var(--ion-blue-subtext);
+        margin-bottom: 30px;
+        line-height: 1.5;
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        ion-button {
+            margin: 0;
+            --border-radius: 12px;
+            --box-shadow: none;
+            min-height: 55px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .delete-btn {
+            --background: var(--ion-red-action);
+            --color: var(--ion-blue-background);
+        }
+
+        .cancel-btn {
+            --background: transparent;
+            --color: var(--ion-blue-subtext);
+            border: 2px solid var(--ion-blue-highlight);
+            border-radius: 12px;
+            min-height: 48px;
+        }
+    }
+}

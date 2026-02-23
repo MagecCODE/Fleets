@@ -14,9 +14,15 @@ export class IncidenciesService {
 
   // Fecth all incidence from database
   getIncidencies(): Observable<any[]> {
-    return this.http
-      .get<any>(this.INCIDEN_SERVER_URL)
-      .pipe(map((response) => response.incidencies));
+    return this.http.get<any[]>(this.INCIDEN_SERVER_URL);
+  }
+
+  deleteIncidence(id: number): Observable<any> {
+    return this.http.delete(`${this.INCIDEN_SERVER_URL}/${id}`);
+  }
+
+  updateIncidence(id: number, incidenceData: Partial<Incidence>): Observable<any> {
+    return this.http.put(`${this.INCIDEN_SERVER_URL}/${id}`, incidenceData);
   }
 
   // Fetch incidence by unitfleet

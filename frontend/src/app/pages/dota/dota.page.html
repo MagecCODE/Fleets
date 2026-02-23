@@ -14,43 +14,43 @@
       <div>
         <ion-row>
           <!-- Tarjetas para mostrar la dotación de la ambulancia -->
-            @for (employee of employees; track employee.dni) {
-            <ion-col>
-              <ion-card class="employee-card">
-                <ion-item class="employee-card__item">
-                  <!-- Muestra la foto del empleado -->
-                  <ion-avatar class="employee-card__avatar">
-                    <img alt="Foto del empleado" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-                  </ion-avatar>
-                  <!-- Muestra el nombre y apellidos -->
-                  <ion-card-header class="employee-card__header">
-                    <ion-card-title class="employee-card__title">{{ employee.name }}</ion-card-title>
-                    <ion-card-subtitle class="employee-card__subtitle">{{ employee.surname }}</ion-card-subtitle>
-                  </ion-card-header>
+          @for (employee of employees; track employee.dni) {
+          <ion-col>
+            <ion-card class="employee-card">
+              <ion-item class="employee-card__item">
+                <!-- Muestra la foto del empleado -->
+                <ion-avatar class="employee-card__avatar">
+                  <img alt="Foto del empleado" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                </ion-avatar>
+                <!-- Muestra el nombre y apellidos -->
+                <ion-card-header class="employee-card__header">
+                  <ion-card-title class="employee-card__title">{{ employee.name }}</ion-card-title>
+                  <ion-card-subtitle class="employee-card__subtitle">{{ employee.surname }}</ion-card-subtitle>
+                </ion-card-header>
+              </ion-item>
+              <!-- Muestra el resto de los datos que se quieran mostrar -->
+              <ion-card-content class="employee-card__content">
+                <ion-item class="employee-card__info-item">
+                  <ion-text class="employee-card__info-text">
+                    <span class="employee-card__info-label">{{ employee.prof }}</span>
+                  </ion-text>
                 </ion-item>
-                <!-- Muestra el resto de los datos que se quieran mostrar -->
-                <ion-card-content class="employee-card__content">
-                  <ion-item class="employee-card__info-item">
-                    <ion-text class="employee-card__info-text">
-                      <span class="employee-card__info-label">{{ employee.prof }}</span>
-                    </ion-text>
-                  </ion-item>
-                </ion-card-content>
-                <!-- Muestra el puesto que ocupa dentro de la dotación -->
-                <div class="employee-card__chips">
-                  @if (employee.id == dota?.driveId) {
-                  <ion-chip class="employee-card__chip"> Conductor </ion-chip>
-                  } @if (employee.id == dota?.sanitId) {
-                  <ion-chip class="employee-card__chip">
-                    Sanitario
-                  </ion-chip>
-                  } @if (employee.id == dota?.facultId) {
-                  <ion-chip class="employee-card__chip"> Facultativo </ion-chip>
-                  }
-                </div>
-              </ion-card>
-            </ion-col>
-            }
+              </ion-card-content>
+              <!-- Muestra el puesto que ocupa dentro de la dotación -->
+              <div class="employee-card__chips">
+                @if (employee.id == dota?.driveId) {
+                <ion-chip class="employee-card__chip"> Conductor </ion-chip>
+                } @if (employee.id == dota?.sanitId) {
+                <ion-chip class="employee-card__chip">
+                  Sanitario
+                </ion-chip>
+                } @if (employee.id == dota?.facultId) {
+                <ion-chip class="employee-card__chip"> Facultativo </ion-chip>
+                }
+              </div>
+            </ion-card>
+          </ion-col>
+          }
         </ion-row>
       </div>
 
@@ -123,11 +123,11 @@
             </ion-col>
             <ion-col>
               @if (incident.status == 'Pendiente') {
-                <ion-chip class="status-chip status-chip--pendiente">PENDIENTE</ion-chip>
+              <ion-chip class="status-chip status-chip--pendiente">PENDIENTE</ion-chip>
               } @if (incident.status == 'En proceso') {
-                <ion-chip class="status-chip status-chip--proceso">EN PROCESO</ion-chip>
+              <ion-chip class="status-chip status-chip--proceso">EN PROCESO</ion-chip>
               } @if (incident.status == 'Resuelta') {
-                <ion-chip class="status-chip status-chip--resuelta">RESUELTA</ion-chip>
+              <ion-chip class="status-chip status-chip--resuelta">RESUELTA</ion-chip>
               }
             </ion-col>
           </ion-row>
