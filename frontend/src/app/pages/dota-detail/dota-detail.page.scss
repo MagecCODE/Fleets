@@ -1,0 +1,252 @@
+// 1. Fondo principal con el gradiente original
+ion-content {
+    --background: linear-gradient(60deg,
+            var(--ion-blue-text),
+            var(--ion-blue-subtext));
+}
+
+// 2. Contenedor de la página
+.unit-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+    min-width: 600px;
+    color: var(--ion-blue-background); // Cambiado a claro para que se lea sobre el gradiente
+
+    &__grid {
+        width: 100%;
+        max-width: 1200px;
+        min-width: 600px;
+        margin: 0 auto; // Centra la rejilla en pantallas anchas
+        padding: 10px;
+    }
+
+    // Header: Ajustado para que el botón y el texto alineen al centro (no a la base)
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0 10px 14px 10px;
+    }
+
+    &__header-info {
+        display: flex;
+        align-items: baseline;
+        gap: 15px;
+
+        ion-buttons {
+            margin: 0;
+        }
+
+        ion-back-button {
+            --color: var(--ion-blue-background); // Asegura que sea blanco/claro
+            margin: 0;
+        }
+    }
+
+    &__unit-number {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--ion-blue-background);
+        line-height: 1
+    }
+
+    &__unit-type {
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--ion-blue-background);
+        opacity: 0.9;
+        line-height: 1;
+    }
+
+    &__section-title {
+        display: block;
+        color: var(--ion-blue-background);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 32px 0 16px 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+}
+
+// 3. Tarjetas de los empleados (Corregido: Sin bordes y profesión limpia)
+.employee-card {
+    background: var(--ion-blue-background);
+    border-radius: 15px;
+    box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
+    margin: 0 0 10px 0;
+    padding: 8px 0 0 0;
+    text-align: center;
+    text-transform: capitalize;
+    border: none; // Eliminamos cualquier borde residual
+
+    &__item {
+        --background: transparent;
+        --border-color: transparent;
+        padding: 0;
+    }
+
+    &__avatar {
+        --border-radius: 10%;
+        width: 100px;
+        height: auto;
+
+        border: none;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__title {
+        color: var(--ion-blue-text);
+        font-weight: 700;
+        font-size: 1.4rem;
+    }
+
+    &__subtitle {
+        color: var(--ion-blue-text);
+        font-weight: 400;
+        font-size: 1rem;
+        opacity: 0.8;
+    }
+
+    &__content {
+        padding: 0 16px;
+    }
+
+    // Forzamos transparencia en la zona de la profesión
+    &__info-item {
+        --background: transparent;
+        --border-color: transparent;
+        padding: 0;
+    }
+
+    &__info-label {
+        color: var(--ion-blue-text);
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    &__chip {
+        background: var(--ion-blue-highlight);
+        color: var(--ion-blue-text);
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 10px 0 15px 0;
+    }
+}
+
+// Tarjeta de inventario (Optimización de grid)
+.inventory-card {
+    background: var(--ion-blue-background);
+    border-radius: 15px;
+    box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
+    margin: 0 4px 10px 4px;
+    text-align: left;
+    text-transform: capitalize;
+    overflow: hidden;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 3fr repeat(2, 1fr) 180px;
+        // align-items: center;
+        width: 100%;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    &__item {
+        padding: 16px;
+        color: var(--ion-blue-text);
+        font-weight: 700;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        font-size: 1rem;
+
+        &-label {
+            margin: 0 0 4px 0;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            font-weight: 700
+        }
+    }
+
+    &__button-col {
+        grid-column: 4;
+        min-width: 150px;
+        padding: 0;
+    }
+
+    &__request-button {
+        --background: var(--ion-red-action);
+        --color: var(--ion-blue-background);
+        --box-shadow: none;
+        --border-radius: 0 15px 15px 0;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+// Tabla de Incidentes TRANSPARENTE
+.incidencias-table {
+    background: rgba(255, 255, 255, 0.08); // Efecto cristal suave
+    border-radius: 15px;
+    //backdrop-filter: blur(5px); // Difumina ligeramente el fondo para mejorar legibilidad
+    overflow: hidden;
+    margin: 10px;
+
+    &__row {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        align-items: center;
+        padding: 8px 0;
+        color: var(--ion-blue-background);
+
+        &--header {
+            background: rgba(0, 0, 0, 0.25);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+    }
+
+    &__cell-text {
+        margin: 0;
+        padding: 0 12px;
+        font-size: 0.9rem;
+    }
+}
+
+// 6. Chips de estado
+.status-chip {
+    --color: var(--ion-blue-text);
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+
+    &--pendiente {
+        --background: var(--ion-red-action);
+    }
+
+    &--proceso {
+        --background: #ffa500;
+    }
+
+    &--resuelta {
+        --background: #2dd36f;
+    }
+}

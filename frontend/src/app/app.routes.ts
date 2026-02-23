@@ -15,4 +15,14 @@ export const routes: Routes = [
     path: 'dota',
     loadComponent: () => import('./pages/dota/dota.page').then( m => m.DotaPage)
   },
+  {
+    path: 'admin',
+    loadComponent: () => import('./pages/admin/admin.page').then( m => m.AdminPage)
+  },
+  {
+    path: 'dota-detail/:unitfleet',
+    loadComponent: () => import('./pages/dota-detail/dota-detail.page').then( m => m.DotaDetailPage)
+  },
+
+
 ];

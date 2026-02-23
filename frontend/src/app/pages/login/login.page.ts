@@ -37,9 +37,27 @@ export class LoginPage {
       next: (response) => {
         console.log("[DEBUG - LOGIN] RESPUESTA LOGIN:", response);
         
-        const user = response; // Ajusta esto según la estructura de tu respuesta
+        const user = response; 
         this.authService.setUser(user);
-        this.navCtrl.navigateRoot('/dota');
+        
+        // Redirección según rol
+        switch (user.rol) {
+          case 'Admin':
+            this.navCtrl.navigateRoot('/admin');
+            break;
+
+          case 'Logistics':
+          case 'Mro':
+          case 'Sanitary':
+            this.navCtrl.navigateRoot('/dota');
+            break;
+          default:
+            console.warn("[DEBUG - LOGIN] Rol desconocido:", user.rol);
+            this.navCtrl.navigateRoot('/login');
+            break;
+        }       
+        
+        //this.navCtrl.navigateRoot('/dota');
 
         //if (user.rol === 'Sanitary') { return this.navCtrl.navigateRoot('/unit');}
       },

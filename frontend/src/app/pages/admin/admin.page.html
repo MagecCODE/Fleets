@@ -1,0 +1,74 @@
+<ion-content>
+  <div class="admin-page">
+    <ion-grid class="admin-page__grid">
+
+      <!-- Header con admin -->
+      <div class="admin-page__header">
+        <div class="admin-page__header-info">
+          <span class="admin-page__title">Panel de dotaciones</span>
+          <span class="admin-page__subtitle">
+            Admin: {{ adminUser?.name }} {{ adminUser?.surname }}
+          </span>
+        </div>
+        <ion-button fill="clear" (click)="logout()" class="logout-btn">
+          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- Lista de dotaciones en tarjetas -->
+      <div class="admin-page__section">
+        <ion-text class="admin-page__section-title">Dotaciones</ion-text>
+
+        <ion-row>
+          @for (dotation of dotations; track dotation.dota.id) {
+          <ion-col size="12" size-md="6" size-lg="4">
+            <ion-card class="dotation-card" (click)="openDotationDetail(dotation.dota.unitfleet)">
+
+              <!-- Cabecera: unidad + tipo -->
+              <ion-item class="dotation-card__header">
+                <ion-label>
+                  <h2>UNIDAD {{ dotation.unit?.unitfleet }}</h2>
+                  <p>{{ dotation.unit?.typefleet }}</p>
+                </ion-label>
+              </ion-item>
+
+              <!-- Cuerpo: empleados -->
+              <ion-card-content class="dotation-card__content">
+                <ion-grid>
+                  <ion-row>
+                    @for (employee of dotation.employees; track employee.dni) {
+                    <ion-col size="12">
+                      <ion-item class="dotation-card__employee-item">
+                        <ion-avatar slot="start">
+                          <img alt="Foto del empleado"
+                              src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                        </ion-avatar>
+                        <ion-label>
+                          <h3>{{ employee.name }} {{ employee.surname }}</h3>
+                          <p>{{ employee.prof }}</p>
+                        </ion-label>
+                        <ion-chip *ngIf="employee.id === dotation.dota.driveId">
+                          Conductor
+                        </ion-chip>
+                        <ion-chip *ngIf="employee.id === dotation.dota.sanitId">
+                          Sanitario
+                        </ion-chip>
+                        <ion-chip *ngIf="employee.id === dotation.dota.facultId">
+                          Facultativo
+                        </ion-chip>
+                      </ion-item>
+                    </ion-col>
+                    }
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+
+            </ion-card>
+          </ion-col>
+          }
+        </ion-row>
+      </div>
+
+    </ion-grid>
+  </div>
+</ion-content>
