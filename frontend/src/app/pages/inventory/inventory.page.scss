@@ -1,9 +1,11 @@
+/* FONDO DINÁMICO */
 ion-content {
   --background: linear-gradient(60deg,
       var(--ion-blue-text),
       var(--ion-blue-subtext));
 }
 
+/* CONTENEDOR PRINCIPAL */
 .inventory-page {
   display: flex;
   flex-direction: column;
@@ -44,6 +46,7 @@ ion-content {
     padding: 12px 0px;
   }
 
+  /* SECCIONES */
   &__section-header {
     display: flex;
     justify-content: space-between;
@@ -60,8 +63,12 @@ ion-content {
     padding: 0px 0px 0px 8px;
     letter-spacing: 1px;
     text-transform: uppercase;
+    border-left: 4px solid var(--ion-red-action); // Detalle de armonía
+    padding-left: 12px;
   }
+}
 
+/* BARRA DE BUSQUEDA  */
   .inventory-searchbar {
     width: 300px;
     --background: var(--ion-blue-background);
@@ -71,7 +78,6 @@ ion-content {
     --icon-color: var(--ion-blue-subtext);
     --color: var(--ion-blue-subtext);
     padding: 0;
-  }
 
   &__new-incidence-button,
   &__delete-button {
@@ -95,6 +101,7 @@ ion-content {
     --background: var(--ion-red-action);
   }
 }
+
 
 .inventory-table {
   border-radius: 15px;

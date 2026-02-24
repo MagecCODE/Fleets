@@ -7,8 +7,11 @@ import { addIcons } from 'ionicons';
 import { logOutOutline, addOutline, trashOutline, createOutline, saveOutline, closeOutline } from 'ionicons/icons';
 
 import { IncidenciesService } from 'src/app/services/incidence/incidencies.service';
+import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { AuthService } from 'src/app/auth/auth.service';
+
 import { Incidence } from 'src/app/models/incidence.model';
+import { Employee } from 'src/app/models/employee.model';
 
 @Component({
   selector: 'app-incident-form',
@@ -19,23 +22,30 @@ import { Incidence } from 'src/app/models/incidence.model';
 })
 export class IncidentFormPage implements OnInit {
 
-  private route = inject(ActivatedRoute);
-  private incidenceService = inject(IncidenciesService);  
+  private incidenceService = inject(IncidenciesService);
+  private employeeService = inject(EmployeeService);  
   private authService = inject(AuthService); 
+
+  private route = inject(ActivatedRoute);
   private toastCtrl = inject(ToastController);
   private loadingCtrl= inject(LoadingController);
-  private navCtrl = inject(NavController);
+  private navCtrl = inject(NavController);  
 
-  isDeleteAlertOpen: boolean = false;
-  incidentToDelete: Incidence | null = null;
-
+  //DATAS
   incidents: Incidence[] = [];
+  newIncident = this.initNewIncidentObject();   
+  editingIncident: Incidence | null = null; 
+  incidenceUnitFleet: number = 0; 
+  incidentEmployeeDni: string = '';
+  incidentEmployee: Employee | null = null;
   selectedIncident: Incidence | null = null;
   
-  isEditing: boolean = false;
-  editingIncident: Incidence | null = null;
+  //STATES UI  
+  isDeleteAlertOpen: boolean = false;  
+  isEditing: boolean = false; 
   isAddingNew: boolean = false;
-  newIncident = this.initNewIncidentObject();
+  incidentToDelete: Incidence | null = null;
+
 
   constructor ( ) {
     addIcons({ 
@@ -49,20 +59,25 @@ export class IncidentFormPage implements OnInit {
   }
   
   ngOnInit() {    
-    const unitfleet = Number(this.route.snapshot.paramMap.get('unitfleet'));
-    
-    this.loadIncidences(unitfleet);
+    this.incidenceUnitFleet = Number(this.route.snapshot.paramMap.get('unitfleet')); 
+    this.incidentEmployeeDni = String(this.route.snapshot.paramMap.get('dni_emp')); ;   
+    this.newIncident.unitfleet = this.incidenceUnitFleet; // Asignamos el unitfleet al nuevo objeto para que se muestre en el formulario de creación 
+    this.newIncident.dni_emp = this.incidentEmployeeDni; // Asignamos el dni del empleado logueado al nuevo objeto iincidencia
+    this.loadIncidences(this.incidenceUnitFleet);
+    this.loadIncidentEmployee(); // Cargamos los datos del empleado para mostrar su nombre en el formulario de creación
+    console.log(`[DEBUG - INCIDENCIA PAGE] - ngOni:', employeeDNI: ${this.newIncident.dni_emp}, unitfleet: ${this.newIncident.unitfleet}`);
   }
 
-  // Refactored method to initialize new incident object with default values
-  private initNewIncidentObject() {
+  // Helper method to initialize a new incident object with default values
+  private initNewIncidentObject() : Incidence{
     return {
+      id: 0, // El backend asignará el ID real
       incidence_type: '',
-      unitfleet: undefined as number | undefined,
-      dni_emp: '',
-      description: '',
-      status: 'Pendiente',
-      date: new Date()
+      unitfleet: this.incidenceUnitFleet,
+      dni_emp: this.incidentEmployeeDni,
+      description: '',      
+      date: new Date(),
+      status: 'Pendiente'
     };
   }
 
@@ -82,6 +97,7 @@ export class IncidentFormPage implements OnInit {
     this.selectedIncident = incident;
     this.isEditing = false;
     this.editingIncident = null;
+    this.loadIncidentEmployee();
   }
 
   deleteIncident(incident: Incidence) {
@@ -130,6 +146,8 @@ export class IncidentFormPage implements OnInit {
 
     this.incidenceService.updateIncidence(this.editingIncident.id, { status: newStatus, description: newDescription }).subscribe({
       next: () => {
+        this.showToast('Incidencia creada con éxito', 'success');        
+
         // Save to selected object
         this.selectedIncident!.status = newStatus;
         this.selectedIncident!.description = newDescription;
@@ -151,93 +169,63 @@ export class IncidentFormPage implements OnInit {
     });
   }
 
-  async createIncident() {
-    if (!this.newIncident.incidence_type || !this.newIncident.description || !this.newIncident.status) {
+  createIncident = async () => {
+    if (!this.newIncident?.incidence_type || !this.newIncident?.description) {
       this.showToast('Completa los campos requeridos', 'warning');
       return;
     }
     const loading = await this.loadingCtrl.create({ message: 'Guardando...' });
     await loading.present();
 
-    this.incidenceService.createIncidence(this.newIncident).subscribe({
-      next: () => {
-        loading.dismiss();
-        this.showToast('Incidencia creada con éxito', 'success');        
-      },
-      error: () => { loading.dismiss(); this.showToast('Error al crear la nueva incidencia', 'danger'); }
-    });
-  }
-  
-  // --- NAVIGATION METHODS ---
-/*
-  // Method to prepare the form for creating a new incident
-  prepareNewIncident() {
-    this.isAddingNew = true;
-    this.selectedIncidence = null;
-    this.isEditing = false;
-    this.newIncident = {
-      ...this.initNewIncidentObject(),
-      unitfleet: this.unit?.unitfleet,
-      dni_emp: this.currentEmployeeDni
+    const incidenceToCreate: Incidence = {
+      ...this.newIncident,
+      incidence_type: this.newIncident.incidence_type,
+      description: this.newIncident.description,
     };
-  }
 
-  // Method to select an incident for viewing or editing
-  selectIncidence(incidence: Incidence) {
-    this.isAddingNew = false;
-    this.selectedIncidence = incidence;
-    this.isEditing = false;
-  }
+    console.log('[DEBUG - INCIDENT FORM] - Incidencia a crear:', incidenceToCreate);
 
-  // -- PERSISTENCE LOGIC & METHODS ---
-
-  async createIncident() {
-    if (!this.newIncident.incidence_type || !this.newIncident.description) {
-      this.showToast('Completa los campos requeridos', 'warning');
-      return;
-    }
-
-    const loading = await this.loadingCtrl.create({ message: 'Guardando...' });
-    await loading.present();
-
-    this.incidenceService.createIncidence(this.newIncident as any).subscribe({
+    this.incidenceService.createIncidence(incidenceToCreate).subscribe({
       next: () => {
         loading.dismiss();
-        this.showToast('Creada con éxito', 'success');
+        this.showToast('Incidencia creada con éxito', 'success');
+
+        // 1. Recargamos los datos para que aparezca en la lista
+        this.loadIncidences(this.incidenceUnitFleet);
+        
+        // 2. Cerramos el formulario de creación
         this.isAddingNew = false;
-        if (this.unit) this.loadUnitIncidents(this.unit.unitfleet);
+        
+        // 3. Limpiamos el objeto por si quiere crear otra después
+        this.newIncident = this.initNewIncidentObject();      
       },
-      error: () => { loading.dismiss(); this.showToast('Error al crear', 'danger'); }
-    });
-  }
-
-  editIncident() {
-    if (this.selectedIncidence) {
-      this.editingIncident = { ...this.selectedIncidence };
-      this.isEditing = true;
-    }
-  }
-
-  saveEdit() {
-    if (!this.editingIncident || !this.selectedIncidence) return;
-    
-    this.incidenceService.updateIncidence(this.selectedIncidence.id, this.editingIncident).subscribe({
-      next: () => {
-        this.showToast('Actualizada', 'success');
-        this.isEditing = false;
-        if (this.unit) this.loadUnitIncidents(this.unit.unitfleet);
-        this.selectedIncidence = { ...this.selectedIncidence, ...this.editingIncident } as Incidence;
+      error: (e) => { 
+        loading.dismiss();
+        console.error('\n[ERROR 404] Error al crear la nueva incidencia:\n', e.error);
+        this.showToast('Error al crear la nueva incidencia', 'danger'); 
       }
     });
-  }
-*/
+  } 
+  
   // --- HELPERS ---
   private async showToast(message: string, color: string) {
     const toast = await this.toastCtrl.create({ message, duration: 2000, color });
     toast.present();
   }
 
-  goBack() {
-    this.navCtrl.back();
+  private loadIncidentEmployee() {
+      this.employeeService.getEmployeeByDni(this.incidentEmployeeDni).subscribe({
+        next: (employee) => {
+          console.log('[DEBUG - INCIDENCIA PAGE] - Devolucion de loadIncidentEmployee:', employee);
+          this.incidentEmployee = employee;
+          //this.incidenceUnitFleet = this.selectedIncident?.unitfleet || 0;          
+        },
+        error: (err) => {
+          console.error('Error al cargar el empleado de la incidencia', err);
+        }
+      });
   }
+
+  // --- NAVEGACION  ---
+  goBack() {this.navCtrl.back();}
 }

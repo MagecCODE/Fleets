@@ -5,9 +5,9 @@
 // con el resto del código que usa require().
 const PROFESSIONS = {
     ENFERMERO: 'Enfermero',
-    TES: 'Técnico en Emergencias Sanitarias',
+    TES: 'Tecnico en Emergencias Sanitarias',
     FACULTATIVO: 'Facultativo',
-    LOGISTIC: 'Botiquín',
+    LOGISTIC: 'Botiquin',
     MRO: 'Mantenimiento',
     ADMIN: 'Jefatura'
 };
@@ -26,7 +26,7 @@ const INCIDENCE_STATUS = {
 };
 
 const INCIDENCE_TYPES = {
-    MECHANICAL: 'Mecánica',
+    MECHANICAL: 'Mecanica',
     MATERIAL: 'Material',
     PATIENT: 'Paciente',
     SERVICE: 'Servicio',
@@ -41,7 +41,7 @@ const INVENTORY_STATUS = {
 const UNIT_TYPES = {
     MEDICALIZADA: 'Medicalizada',
     SANITARIZADA: 'Sanitizada',
-    SVB: 'Soporte Vital Básico',
+    SVB: 'Soporte Vital Basico',
     NO_URGENTE: 'No Urgente'
 };
 

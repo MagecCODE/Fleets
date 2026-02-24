@@ -5,6 +5,8 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { IncidenciesService } from 'src/app/services/incidence/incidencies.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Incidence } from 'src/app/models/incidence.model';
+import { Employee } from 'src/app/models/employee.model';
+import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { addIcons } from 'ionicons';
 import { logOutOutline, addOutline, trashOutline, createOutline } from 'ionicons/icons';
 
@@ -18,6 +20,8 @@ import { logOutOutline, addOutline, trashOutline, createOutline } from 'ionicons
 export class IncidentsPage implements OnInit {
   private incidenceService = inject(IncidenciesService);
   private authService = inject(AuthService);
+  private employeeService = inject(EmployeeService);
+
 
   isDeleteAlertOpen = false;
   incidentToDelete: Incidence | null = null;
@@ -27,6 +31,8 @@ export class IncidentsPage implements OnInit {
   
   isEditing = false;
   editingIncident: Incidence | null = null;
+
+  incidentEmployee: Employee | null = null;
 
   constructor(private navCtrl: NavController) {
     addIcons({ 
@@ -58,6 +64,7 @@ export class IncidentsPage implements OnInit {
     this.selectedIncident = incident;
     this.isEditing = false;
     this.editingIncident = null;
+    this.loadIncidentEmployee();
   }
 
   deleteIncident(incident: Incidence) {
@@ -108,7 +115,7 @@ export class IncidentsPage implements OnInit {
       next: () => {
         // Save to selected object
         this.selectedIncident!.status = newStatus;
-        this.selectedIncident!.description = newDescription;
+        this.selectedIncident!.description = newDescription;        
         
         // Save to list
         const listIndex = this.incidents.findIndex(i => i.id === this.selectedIncident!.id);
@@ -129,5 +136,19 @@ export class IncidentsPage implements OnInit {
   logout() {
     this.authService.logout();
     this.navCtrl.navigateRoot('/login');
+  }
+
+  private loadIncidentEmployee() {
+    if (this.selectedIncident) {
+      this.employeeService.getEmployeeByDni(this.selectedIncident.dni_emp).subscribe({
+        next: (employee) => {
+          console.log('[DEBUG - INCIDENCIA PAGE] - Devolucion de loadIncidentEmployee:', employee);
+          this.incidentEmployee = employee;
+        },
+        error: (err) => {
+          console.error('Error al cargar el empleado de la incidencia', err);
+        }
+      });
+    }
   }
 }

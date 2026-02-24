@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, NavController, ViewWillEnter } from '@ionic/angular';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { IncidenciesService } from 'src/app/services/incidence/incidencies.service';
@@ -23,7 +23,7 @@ import { Inventory } from 'src/app/models/inventoty.model';
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
 })
-export class DotaPage implements OnInit {
+export class DotaPage implements OnInit, ViewWillEnter {
 
   private employeeService = inject(EmployeeService);
   private inventoryService = inject(InventoryService);
@@ -35,22 +35,33 @@ export class DotaPage implements OnInit {
   employees: Employee[] = [];
   inventory: Inventory[] = [];
   incidence: Incidence[] = [];
+  employee: Employee | null = null;
   dota: Dota | null = null;
   unit: Unit | null = null;
 
+  employeeId: number | null = null;
+  employeeDNI: string = '';
 
   constructor(private navCtrl: NavController) {
     addIcons({ 'log-out-outline': logOutOutline });
   }
 
   ngOnInit() {
+    this.employeeId = this.authService.getEmployeeId();
+    this.employeeDNI = this.authService.getUser()?.dni || '';   
 
-    const employeeId = this.authService.getEmployeeId();   
-
-    console.log("[DEBUG - DOTA - DotaPage] ID del empleado logueado:", employeeId);
+    console.log("[DEBUG - DOTA - DotaPage] ID del empleado logueado:", this.employeeId);
     console.log("[DEBUG - DOTA - DotaPage] Usuario cargado:", this.authService.getUser());
-    console.log("[DEBUG - DOTA - DotaPage] ID empleado:", this.authService.getEmployeeId());
-    this.getDotaInfo(employeeId);     
+    console.log("[DEBUG - DOTA - DotaPage] ID empleado:", this.authService.getEmployeeId()); 
+    console.log("[DEBUG - DOTA - DotaPage] DNI empleado:", this.employeeDNI);   
+  }
+
+  // REFRESH DATA ON VIEW ENTER
+  // Se ejecuta cada vez que regresas a esta pestaña
+  ionViewWillEnter() {
+    const employeeId = this.authService.getEmployeeId();
+    console.log("[REFRESH] Recargando datos de Dota...");
+    this.getDotaInfo(employeeId); 
   }
 
   // Refactored method to fetch Dota info and then load related Unit and Employees
@@ -87,13 +98,17 @@ export class DotaPage implements OnInit {
               this.dota.sanitId,
               this.dota.facultId
             ];
-            
+
+            // Reiniciamos el array para evitar duplicados si se vuelve a cargar la información al entrar y salir de la pestaña
+            // Limpiamos la lista
             this.employees = [];
 
             ids.forEach(id => {
               if (id) {
                 this.employeeService.getEmployeeById(id).subscribe({
-                  next: (emp) => this.employees.push(emp)});
+                  next: (emp) => 
+                    this.employees.push(emp)
+                });
               }
             });           
           }          
@@ -123,11 +138,11 @@ export class DotaPage implements OnInit {
   } 
 
   // Placeholder for new incident creation
-  newIncident(unitfleet: number){
-    this.navCtrl.navigateForward(`/incident-form/${unitfleet}`);
+  newIncident(unitfleet: number, dni_emp: string) {
 
-    console.log("[DEBUG - DOTA - DotaPage] Navegando debur",  this.navCtrl.navigateForward(`/incident-form/${unitfleet}`));
-  };
+    // Actualizamos el DNI del empleado para pasarlo al formulario de incidencia
+    this.navCtrl.navigateForward(`/incident-form/${unitfleet}/${this.employeeDNI}`);
+  }
 
   // Logout
   logout() {

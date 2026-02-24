@@ -5,9 +5,9 @@ module.exports = {
 
     const incidencies = [
       // 🟧 MECÁNICAS (MRO o TES)
-      { unitfleet: 1000, dni_emp: "55555555E", incidence_type: "Mecánica", description: "Ruidos en el motor al arrancar.", date: new Date(), status: "Pendiente", createdAt: new Date(), updatedAt: new Date() },
-      { unitfleet: 2003, dni_emp: "66666666F", incidence_type: "Mecánica", description: "Fallo intermitente en el alternador.", date: new Date(), status: "En proceso", createdAt: new Date(), updatedAt: new Date() },
-      { unitfleet: 3004, dni_emp: "88888888H", incidence_type: "Mecánica", description: "Vibración en la dirección a baja velocidad.", date: new Date(), status: "Pendiente", createdAt: new Date(), updatedAt: new Date() },
+      { unitfleet: 1000, dni_emp: "55555555E", incidence_type: "Mecanica", description: "Ruidos en el motor al arrancar.", date: new Date(), status: "Pendiente", createdAt: new Date(), updatedAt: new Date() },
+      { unitfleet: 2003, dni_emp: "66666666F", incidence_type: "Mecanica", description: "Fallo intermitente en el alternador.", date: new Date(), status: "En proceso", createdAt: new Date(), updatedAt: new Date() },
+      { unitfleet: 3004, dni_emp: "88888888H", incidence_type: "Mecanica", description: "Vibración en la dirección a baja velocidad.", date: new Date(), status: "Pendiente", createdAt: new Date(), updatedAt: new Date() },
 
       // 🟧 MATERIAL (Logistics o Sanitary)
       { unitfleet: 1004, dni_emp: "33333333C", incidence_type: "Material", description: "Faltan gasas estériles en el botiquín.", date: new Date(), status: "Pendiente", createdAt: new Date(), updatedAt: new Date() },

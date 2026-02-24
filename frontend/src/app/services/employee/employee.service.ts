@@ -55,7 +55,7 @@ export class EmployeeService {
 
   login(dni: string, password: string) {
     return this.http.post<{ message: string, user: Employee }>(
-      `${this.EMPLOYE_SERVER_URL}/emps/login`, 
+      `${this.EMPLOYE_SERVER_URL}/login`, 
       {dni, password}
     ).pipe(
       map(response => response.user) // Extraemos solo el usuario de la respuesta
