@@ -15,7 +15,7 @@ const PROFESSIONS = {
 const ROLES = {
     ADMIN: 'Admin',
     LOGISTIC: 'Logistics',
-    MOR: 'Mro',
+    MRO: 'Mro',
     SANITARY: 'Sanitary'
 };
 

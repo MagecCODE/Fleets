@@ -66,6 +66,8 @@ ion-content {
     margin: 32px 0 16px 10px;
     letter-spacing: 1px;
     text-transform: uppercase;
+    border-left: 4px solid var(--ion-red-action); // Detalle de armonía
+    padding-left: 12px;
   }
 
   &__new-incidence-button {
@@ -205,12 +207,12 @@ ion-content {
 
 // Estilo para la "Tabla" de Incidentes
 .incidencias-table {
-  background: rgba(255, 255, 255, 0.08); // Estilo cristal suave
+  //background: rgba(255, 255, 255, 0.08); // Estilo cristal suave
   border-radius: 15px;
-  border-radius: 15px;
+  //border-radius: 15px;
   //backdrop-filter: blur(5px); // Difumina ligeramente el fondo para mejorar legibilidad
-  overflow: hidden;
-  margin: 10px;
+  //overflow: hidden;
+  //margin: 10px;
 
   &__row {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -218,13 +220,14 @@ ion-content {
     padding: 12px 0;
     color: var(--ion-blue-background);
 
+    /*
     &--header {
             background: rgba(0, 0, 0, 0.25);
             font-weight: bold;
             text-transform: uppercase;
             font-size: 0.85rem;
         }
-    
+    */
   }
 
   &__cell-text {

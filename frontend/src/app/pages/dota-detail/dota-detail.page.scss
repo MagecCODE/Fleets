@@ -203,24 +203,26 @@ ion-content {
 
 // Tabla de Incidentes TRANSPARENTE
 .incidencias-table {
-    background: rgba(255, 255, 255, 0.08); // Efecto cristal suave
+    //background: rgba(255, 255, 255, 0.08); // Efecto cristal suave
     border-radius: 15px;
     //backdrop-filter: blur(5px); // Difumina ligeramente el fondo para mejorar legibilidad
-    overflow: hidden;
-    margin: 10px;
+    //overflow: hidden;
+    //margin: 10px;
 
     &__row {
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         align-items: center;
-        padding: 8px 0;
+        padding: 12px 0;
         color: var(--ion-blue-background);
 
+        /*
         &--header {
             background: rgba(0, 0, 0, 0.25);
             font-weight: bold;
             text-transform: uppercase;
             font-size: 0.85rem;
         }
+        */
     }
 
     &__cell-text {

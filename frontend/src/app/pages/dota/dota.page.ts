@@ -73,7 +73,6 @@ export class DotaPage implements OnInit {
               this.unitService.getUnitByUnitFleet(unitFleet).subscribe({                
                 next: (uniResp) => {
                   this.unit = uniResp;
-                  //this.unit = unit;
                   console.log("[DEBUG - UNIT - DotaPage] Unit en getDotaInfo: ", this.unit);
                   this.getIncidenceByUnit(unitFleet);
                   this.getInventoryByUnit(unitFleet);
@@ -122,6 +121,13 @@ export class DotaPage implements OnInit {
       }
     });
   } 
+
+  // Placeholder for new incident creation
+  newIncident(unitfleet: number){
+    this.navCtrl.navigateForward(`/incident-form/${unitfleet}`);
+
+    console.log("[DEBUG - DOTA - DotaPage] Navegando debur",  this.navCtrl.navigateForward(`/incident-form/${unitfleet}`));
+  };
 
   // Logout
   logout() {

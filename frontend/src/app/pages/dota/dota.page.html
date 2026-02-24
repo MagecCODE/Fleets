@@ -87,7 +87,7 @@
       <div class="unit-page__section">
         <ion-text class="unit-page__section-title">INCIDENCIAS</ion-text>
         <!-- Tabla para mostrar los incidentes.
-         Este primer bloque es la cabecera de la tabla -->
+        Este primer bloque es la cabecera de la tabla -->
         <ion-grid class="incidencias-table">
           <ion-row class="incidencias-table__row incidencias-table__row--header">
             <ion-col size="1.5">
@@ -133,7 +133,7 @@
           </ion-row>
           }
         </ion-grid>
-        <ion-button class="unit-page__new-incidence-button">
+        <ion-button class="unit-page__new-incidence-button" (click)="newIncident(unit?.unitfleet!)">
           Nueva incidencia
         </ion-button>
       </div>

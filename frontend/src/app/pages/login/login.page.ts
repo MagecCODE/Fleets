@@ -47,7 +47,10 @@ export class LoginPage {
             break;
 
           case 'Logistics':
+            
           case 'Mro':
+              this.navCtrl.navigateRoot('/incidents');
+              break;
           case 'Sanitary':
             this.navCtrl.navigateRoot('/dota');
             break;

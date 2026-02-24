@@ -78,4 +78,8 @@ export class DotaDetailPage implements OnInit {
       next: (list) => this.inventory = list
     });
   };
+
+  goBack() {
+    this.navCtrl.back();
+  }
 }

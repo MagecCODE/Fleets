@@ -29,4 +29,9 @@ export const routes: Routes = [
     path: 'incidents',
     loadComponent: () => import('./pages/incidents/incidents.page').then( m => m.IncidentsPage)
   },
+  {
+    path: 'incident-form/:unitfleet',
+    loadComponent: () => import('./pages/incident-form/incident-form.page').then( m => m.IncidentFormPage)
+  },
+
 ];

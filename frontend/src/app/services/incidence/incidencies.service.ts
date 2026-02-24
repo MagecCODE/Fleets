@@ -12,6 +12,11 @@ export class IncidenciesService {
 
   private INCIDEN_SERVER_URL = API_FLEET.INCIDENCE;
 
+  // Create new incidence
+  createIncidence(incidenceData: Partial<Incidence>): Observable<any> {
+    return this.http.post(this.INCIDEN_SERVER_URL, incidenceData);  
+  }
+
   // Fecth all incidence from database
   getIncidencies(): Observable<any[]> {
     return this.http.get<any[]>(this.INCIDEN_SERVER_URL);

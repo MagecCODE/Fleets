@@ -17,7 +17,7 @@ ion-content {
   &__grid {
     width: 100%;
     max-width: 1200px;
-     min-width: 600px;
+    min-width: 600px;
     margin: 0 auto; // Centrado horizontal
     padding: 10px;
   }
@@ -41,6 +41,7 @@ ion-content {
     font-weight: 900;
     color: var(--ion-blue-background);
     line-height: 1;
+    text-transform: uppercase;
     margin: 0;
   }
 
@@ -48,8 +49,9 @@ ion-content {
     font-size: 1rem;
     font-weight: 600;
     color: var(--ion-blue-background);
-    opacity: 0.8;
+    opacity: 0.6;
     text-transform: uppercase;
+    padding: 5px 0 0 0;
     letter-spacing: 0.5px;
   }
 
@@ -60,7 +62,7 @@ ion-content {
     --padding-end: 8px;
     margin: 0;
     height: 30px;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     padding: 12px 0px;
   }
 
@@ -80,17 +82,18 @@ ion-content {
 
 /* TARJETA DE DOTACIÓN (UNIFICADA CON EL ESTILO ANTERIOR) */
 .dotation-card {
-   background: var(--ion-blue-background);
-    border-radius: 15px;
-    box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
-    margin: 0 0 10px 0;
-    padding: 8px 0 0 0;
-    text-align: center;
-    text-transform: capitalize;
-    border: none; 
+  background: var(--ion-blue-background);
+  border-radius: 15px;
+  box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
+  margin: 0 0 10px 0;
+  padding: 8px 0 0 0;
+  text-align: center;
+  text-transform: capitalize;
+  border: none; 
 
   &__header {
     background: rgba(var(--ion-blue-text-rgb, 0,0,0), 0.03); // Ligero tono para separar header
+    --background: transparent;
     padding: 16px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
 
