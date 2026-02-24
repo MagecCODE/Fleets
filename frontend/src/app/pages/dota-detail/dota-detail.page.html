@@ -4,11 +4,11 @@
 
       <div class="unit-page__header">
         <div class="unit-page__header-info">
-          <ion-buttons slot="start">
-            <ion-back-button (click)="goBack()"></ion-back-button>
-          </ion-buttons>
           <span class="unit-page__unit-number">UNIDAD {{ unit?.unitfleet }}</span>
           <span class="unit-page__unit-type">{{ unit?.typefleet }}</span>
+          <ion-button fill="clear" (click)="goBack()" class="logout-btn">
+              <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+          </ion-button>
         </div>
       </div>
 

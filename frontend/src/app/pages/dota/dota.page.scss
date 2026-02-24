@@ -209,18 +209,12 @@ ion-content {
 
 // Estilo para la "Tabla" de Incidentes
 .incidencias-table {
-<<<<<<< HEAD
   //background: rgba(255, 255, 255, 0.08); // Estilo cristal suave
   border-radius: 15px;
   //border-radius: 15px;
   //backdrop-filter: blur(5px); // Difumina ligeramente el fondo para mejorar legibilidad
   //overflow: hidden;
   //margin: 10px;
-=======
-  border-radius: 15px;
-  overflow: hidden;
-  margin: 10px;
->>>>>>> e794d35eb867cd4a82a1f5221d983991753582b0
 
   &__row {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -230,20 +224,12 @@ ion-content {
 
     /*
     &--header {
-<<<<<<< HEAD
             background: rgba(0, 0, 0, 0.25);
             font-weight: bold;
             text-transform: uppercase;
             font-size: 0.85rem;
         }
     */
-=======
-      font-weight: bold;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-    }
-
->>>>>>> e794d35eb867cd4a82a1f5221d983991753582b0
   }
 
   &__cell-text {

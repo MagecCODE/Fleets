@@ -30,14 +30,13 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/incidents/incidents.page').then( m => m.IncidentsPage)
   },
   {
-<<<<<<< HEAD
+
     path: 'incident-form/:unitfleet',
     loadComponent: () => import('./pages/incident-form/incident-form.page').then( m => m.IncidentFormPage)
   },
-
-=======
+  {
     path: 'inventory',
     loadComponent: () => import('./pages/inventory/inventory.page').then( m => m.InventoryPage)
   },
->>>>>>> e794d35eb867cd4a82a1f5221d983991753582b0
+
 ];
