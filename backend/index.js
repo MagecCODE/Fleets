@@ -36,10 +36,10 @@ const db = require("./models");
 // Use { force: true } to drop and re-create all tables each time the server starts.
 db.sequelize.sync({ force: false }).then(() => {
   console.log(
-    "[SERVER] -> Welcome to Fleets backend server..... [OK] connected database.\n",
+    "\n[SERVER] - Backend:  Welcome to Fleets backend server..... [OK] connected database.\n",
   );
 
-  console.log("[DEBUG LOG] MODELOS DISPONIBLES:", Object.keys(db));
+  console.log("\n[DEBUG LOG] - Backend: MODELOS DISPONIBLES:", Object.keys(db));
 });
 
 // Routes
@@ -92,5 +92,5 @@ require("./routes/inventory.routes")(app);
 require("./routes/unit.routes")(app);
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`\n[SERVER] - Backend: Servidor corriendo en el puerto ${PORT}\n`);
 });

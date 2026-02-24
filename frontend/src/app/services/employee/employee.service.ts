@@ -14,8 +14,6 @@ export class EmployeeService {
 
   EMPLOYE_SERVER_URL: string = API_FLEET.EMPLOYEE;
 
-  constructor(private httpCLient: HttpClient){}
-
   // Fetch all employees from the backend
   getEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.EMPLOYE_SERVER_URL);
@@ -57,7 +55,7 @@ export class EmployeeService {
 
   login(dni: string, password: string) {
     return this.http.post<{ message: string, user: Employee }>(
-      `${this.EMPLOYE_SERVER_URL}/login`, 
+      `${this.EMPLOYE_SERVER_URL}/emps/login`, 
       {dni, password}
     ).pipe(
       map(response => response.user) // Extraemos solo el usuario de la respuesta

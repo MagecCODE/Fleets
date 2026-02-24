@@ -37,7 +37,7 @@ export class LoginPage {
       next: (response) => {
         console.log("[DEBUG - LOGIN] RESPUESTA LOGIN:", response);
         
-        const user = response; 
+        const user: Employee = response; 
         this.authService.setUser(user);
         
         // Redirección según rol
@@ -45,9 +45,9 @@ export class LoginPage {
           case 'Admin':
             this.navCtrl.navigateRoot('/admin');
             break;
-
           case 'Logistics':
-            
+              this.navCtrl.navigateRoot('/inventory');
+              break;            
           case 'Mro':
               this.navCtrl.navigateRoot('/incidents');
               break;
