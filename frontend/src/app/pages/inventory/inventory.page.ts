@@ -25,7 +25,7 @@ export class InventoryPage implements OnInit {
   
   inventory: Inventory[] = [];
 
-  // Pagination & Search
+  // Paginación y búsqueda
   currentPage: number = 1;
   itemsPerPage: number = 12;
   searchTerm: string = '';
@@ -34,6 +34,8 @@ export class InventoryPage implements OnInit {
   
   isAddAlertOpen = false;
   isDeleteAlertOpen = false;
+  isEditMode = false;
+  editingItemId: number | null = null;
 
   newItem = {
     unitfleet: 101,
@@ -59,7 +61,7 @@ export class InventoryPage implements OnInit {
   }
 
   loadInventory() {
-    // Load ALL inventory items for the list
+    // Cargar todos los items del inventario para la lista
     this.inventoryService.getInventary().subscribe({
       next: (data) => {
         this.inventory = data;
@@ -104,8 +106,25 @@ export class InventoryPage implements OnInit {
     return this.selectedIds.size > 0;
   }
 
-  // Modal logic for adding
+  // Lógica del modal para añadir
   addItem() {
+    this.isEditMode = false;
+    this.editingItemId = null;
+    this.resetNewItem();
+    this.isAddAlertOpen = true;
+  }
+
+  // Lógica del modal para editar
+  editItem(item: Inventory) {
+    this.isEditMode = true;
+    this.editingItemId = item.id;
+    this.newItem = {
+      unitfleet: item.unitfleet,
+      dni_emp: item.dni_emp,
+      item_name: item.item_name,
+      quantity: item.quantity,
+      status: item.status
+    };
     this.isAddAlertOpen = true;
   }
 
@@ -118,9 +137,9 @@ export class InventoryPage implements OnInit {
     const user = this.authService.getUser();
     const employeeId = this.authService.getEmployeeId();
     
-    // We already have newItem.unitfleet saved from loadInventory, so map it from there.
     const currentUnitFleet = this.newItem.unitfleet || 101; 
     
+/*
     this.newItem = {
       unitfleet: currentUnitFleet, 
       dni_emp: user ? user.dni : '12345678A',
@@ -128,30 +147,58 @@ export class InventoryPage implements OnInit {
       quantity: 1,
       status: 'Stock'
     };
+*/
   }
 
   saveNewItem() {
-    this.inventoryService.addInventoryItem(this.newItem).subscribe({
-      next: (response) => {
-        // Backend id returning logic or use math.random fallback if mock array
-        const newId = response && response.id ? response.id : Math.floor(Math.random() * 1000) + 10;
-        
-        this.inventory.push(new Inventory(
-          newId,
-          this.newItem.unitfleet,
-          this.newItem.dni_emp,
-          this.newItem.item_name,
-          this.newItem.quantity,
-          this.newItem.status
-        ));
+    if (this.isEditMode && this.editingItemId) {
+      // Actualizar item existente
+      this.inventoryService.updateInventoryItem(this.editingItemId, this.newItem).subscribe({
+        next: (response) => {
+          // Actualizar item en el array local
+          const index = this.inventory.findIndex(i => i.id === this.editingItemId);
+          if (index !== -1) {
+            this.inventory[index] = new Inventory(
+              this.editingItemId!,
+              this.newItem.unitfleet,
+              this.newItem.dni_emp,
+              this.newItem.item_name,
+              this.newItem.quantity,
+              this.newItem.status
+            );
+          }
+          this.isAddAlertOpen = false;
+          this.resetNewItem();
+          this.isEditMode = false;
+          this.editingItemId = null;
+        },
+        error: (err) => {
+          console.error('Error updating inventory item', err);
+        }
+      });
+    } else {
+      //  Añadir nuevo item
+      this.inventoryService.addInventoryItem(this.newItem).subscribe({
+        next: (response) => {
+          const newId = response && response.id ? response.id : Math.floor(Math.random() * 1000) + 10;
+          
+          this.inventory.push(new Inventory(
+            newId,
+            this.newItem.unitfleet,
+            this.newItem.dni_emp,
+            this.newItem.item_name,
+            this.newItem.quantity,
+            this.newItem.status
+          ));
 
-        this.isAddAlertOpen = false;
-        this.resetNewItem();
-      },
-      error: (err) => {
-        console.error('Error adding inventory item', err);
-      }
-    });
+          this.isAddAlertOpen = false;
+          this.resetNewItem();
+        },
+        error: (err) => {
+          console.error('Error adding inventory item', err);
+        }
+      });
+    }
   }
 
   deleteItems() {
@@ -178,7 +225,7 @@ export class InventoryPage implements OnInit {
           if (completed === idsToDelete.length) {
             this.selectedIds.clear();
             this.isDeleteAlertOpen = false;
-            this.loadInventory(); // Refresh view
+            this.loadInventory();
           }
         },
         error: (err) => {
@@ -187,14 +234,14 @@ export class InventoryPage implements OnInit {
           if (completed === idsToDelete.length) {
             this.selectedIds.clear();
             this.isDeleteAlertOpen = false;
-            this.loadInventory(); // Refresh view even if some failed
+            this.loadInventory();
           }
         }
       });
     });
   }
 
-  // Search format logic
+  // Lógica de formato de búsqueda
   get filteredInventory(): Inventory[] {
     if (!this.searchTerm || this.searchTerm.trim() === '') {
       return this.inventory;
@@ -215,7 +262,7 @@ export class InventoryPage implements OnInit {
     this.selectedIds.clear();
   }
 
-  // Pagination logic
+  // Lógica de paginación
   get paginatedInventory(): Inventory[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     return this.filteredInventory.slice(startIndex, startIndex + this.itemsPerPage);
@@ -242,7 +289,7 @@ export class InventoryPage implements OnInit {
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.selectedIds.clear(); // Option to clear selection on page change
+      this.selectedIds.clear();
     }
   }
 

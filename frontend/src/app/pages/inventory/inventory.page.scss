@@ -52,6 +52,7 @@ ion-content {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    padding-left: 12px;
   }
 
   &__section-title {
@@ -60,7 +61,8 @@ ion-content {
     font-size: 1.5rem;
     font-weight: 700;
     margin: 32px 0 16px 10px;
-    padding: 0px 0px 0px 8px;
+    padding: 0px 0px 0px 12px;
+    border-left: 4px solid var(--ion-red-action);
     letter-spacing: 1px;
     text-transform: uppercase;
     border-left: 4px solid var(--ion-red-action); // Detalle de armonía
@@ -113,6 +115,12 @@ ion-content {
     align-items: center;
     padding: 12px 0;
     color: var(--ion-blue-background);
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
 
     &--header {
       font-weight: bold;
@@ -219,7 +227,6 @@ ion-modal.custom-alert-modal {
   padding: 30px 30px;
   width: 90%;
   max-width: 400px;
-  text-align: center;
   border-radius: 20px;
   background: var(--ion-blue-background);
   box-shadow: 0rem 0rem 2rem rgb(0 0 0 / 50%);
@@ -229,13 +236,14 @@ ion-modal.custom-alert-modal {
 
   &__header {
     margin-bottom: 5px;
+    text-align: center;
 
     h1 {
       font-size: 24px;
       font-weight: bold;
       color: var(--ion-blue-text);
       margin: 0;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
     }
   }
 
@@ -251,10 +259,12 @@ ion-modal.custom-alert-modal {
       gap: 5px;
 
       label {
+        padding: 0px 3px;
         font-size: 0.9rem;
         font-weight: bold;
         color: var(--ion-blue-text);
         text-transform: uppercase;
+        margin-top: 12px;
       }
 
       ion-input,
@@ -264,7 +274,9 @@ ion-modal.custom-alert-modal {
         --padding-start: 15px;
         --padding-end: 15px;
         --color: var(--ion-blue-text);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        border: 1px solid var(--ion-blue-highlight);
+        background-color: var(--ion-blue-background);
         font-size: 1rem;
         height: 45px;
       }
@@ -292,14 +304,14 @@ ion-modal.custom-alert-modal {
     }
 
     .save-btn {
-      --background: var(--ion-red-action);
-      --color: var(--ion-blue-background);
+      --background: var(--ion-blue-highlight);
+      --color: var(--ion-blue-text);
     }
 
     .cancel-btn {
       --background: transparent;
       --color: var(--ion-blue-subtext);
-      border: 2px solid var(--ion-blue-highlight);
+      border: 1px solid var(--ion-blue-subtext);
       border-radius: 12px;
       min-height: 48px;
     }

@@ -31,5 +31,10 @@ export class InventoryService {
    deleteInventoryItem(id: number): Observable<any> {
      return this.http.delete<any>(`${this.INVENTORY_SERVER_URL}/${id}`);
    }
+
+   // Update item
+   updateInventoryItem(id: number, item: any): Observable<any> {
+     return this.http.put<any>(`${this.INVENTORY_SERVER_URL}/${id}`, item);
+   }
   
 }

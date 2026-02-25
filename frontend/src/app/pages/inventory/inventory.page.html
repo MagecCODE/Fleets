@@ -39,10 +39,10 @@
 
                     <!-- Table Rows -->
                     @for (item of paginatedInventory; track item.id) {
-                    <ion-row class="inventory-table__row">
+                    <ion-row class="inventory-table__row" (click)="editItem(item)">
                         <ion-col size="1" class="ion-text-center">
                             <ion-checkbox class="inventory-checkbox" [checked]="isSelected(item.id)"
-                                (ionChange)="toggleSelection(item.id)">
+                                (ionChange)="toggleSelection(item.id)" (click)="$event.stopPropagation()">
                             </ion-checkbox>
                         </ion-col>
                         <ion-col size="4">
@@ -113,11 +113,12 @@
             <div class="custom-alert-container">
                 <ion-card class="custom-alert-card">
                     <div class="custom-alert-card__header">
-                        <h1>Añadir Artículo</h1>
+                        <h1>{{ isEditMode ? 'Editar Artículo' : 'Añadir Artículo' }}</h1>
                     </div>
 
                     <div class="custom-alert-card__form">
                         <div class="form-field">
+
                             <label>Nombre del Artículo</label>
                             <ion-input type="text" [(ngModel)]="newItem.item_name"
                                 placeholder="Ej. Mascarillas"></ion-input>
@@ -137,7 +138,7 @@
 
                     <div class="custom-alert-card__actions">
                         <ion-button expand="block" class="save-btn" (click)="saveNewItem()"
-                            [disabled]="!newItem.item_name || newItem.quantity < 1">
+                            [disabled]="!newItem.item_name">
                             Guardar
                         </ion-button>
                         <ion-button expand="block" class="cancel-btn" (click)="cancelAdd()">

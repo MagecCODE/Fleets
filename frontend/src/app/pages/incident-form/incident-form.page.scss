@@ -50,7 +50,7 @@ ion-content {
 }
 
 .incidents-list-col {
-    height: calc(100vh - 100px);
+    //height: calc(100vh - 100px);
     overflow-y: auto;
     padding-right: 10px;
 
@@ -282,7 +282,7 @@ ion-content {
     --box-shadow: none;
     font-weight: bold;
     height: 55px;
-    min-width: 140px;
+    min-width: 200px;
 }
 
 .action-btn-cancel {

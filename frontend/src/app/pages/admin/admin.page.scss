@@ -7,12 +7,12 @@ ion-content {
 
 /* CONTENEDOR PRINCIPAL */
 .admin-page {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 100%;
-    min-width: 600px;
-    color: var(--ion-blue-background); // Texto claro para el fondo degradado
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  min-width: 600px;
+  color: var(--ion-blue-background); // Texto claro para el fondo degradado
 
   &__grid {
     width: 100%;
@@ -57,7 +57,7 @@ ion-content {
 
   /* Estilo para botones de salida o atrás en el header */
   .logout-btn {
-  --color: var(--ion-blue-background);
+    --color: var(--ion-blue-background);
     --padding-start: 8px;
     --padding-end: 8px;
     margin: 0;
@@ -82,20 +82,20 @@ ion-content {
 
 /* TARJETA DE DOTACIÓN (UNIFICADA CON EL ESTILO ANTERIOR) */
 .dotation-card {
-  background: var(--ion-blue-background);
+  background: var(--ion-blue-highlight);
   border-radius: 15px;
   box-shadow: 0 0rem 0.8rem rgb(0 0 0 / 50%);
   margin: 0 0 10px 0;
   padding: 8px 0 0 0;
   text-align: center;
   text-transform: capitalize;
-  border: none; 
+  border: none;
 
   &__header {
-    background: rgba(var(--ion-blue-text-rgb, 0,0,0), 0.03); // Ligero tono para separar header
+    background: var(--ion-blue-highlight); // Ligero tono para separar header
     --background: transparent;
     padding: 16px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 
     h2 {
       font-size: 1.3rem;
@@ -116,26 +116,27 @@ ion-content {
   }
 
   &__content {
+    background: var(--ion-blue-background);
     padding: 8px 0;
   }
+
 
   /* LISTA DE EMPLEADOS */
   &__employee-item {
     --background: transparent;
-    --border-color: rgba(0,0,0,0.05);
+    --border-color: rgba(0, 0, 0, 0.05);
     --padding-start: 16px;
     --inner-padding-end: 16px;
     --min-height: 70px;
 
     ion-avatar {
-      width: 50px;
-      height: 50px;
-      margin-right: 16px;
-      border-radius: 10px; // Estilo cuadrado suave
-      border: none; // Sin remarcado
+      --border-radius: 10%;
+      width: 70px;
+      height: auto;
 
       img {
-        object-fit: cover;
+        width: 100%;
+        height: 100%;
       }
     }
 

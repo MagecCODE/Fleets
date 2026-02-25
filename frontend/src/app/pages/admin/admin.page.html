@@ -33,15 +33,14 @@
               </ion-item>
 
               <!-- Cuerpo: empleados -->
-              <ion-card-content class="dotation-card__content">
+              <ion-card-content class="dotation-card__content ">
                 <ion-grid>
                   <ion-row>
                     @for (employee of dotation.employees; track employee.dni) {
                     <ion-col size="12">
                       <ion-item class="dotation-card__employee-item">
                         <ion-avatar slot="start">
-                          <img alt="Foto del empleado"
-                              src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                          <img alt="Foto del empleado" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                         </ion-avatar>
                         <ion-label>
                           <h3>{{ employee.name }} {{ employee.surname }}</h3>
