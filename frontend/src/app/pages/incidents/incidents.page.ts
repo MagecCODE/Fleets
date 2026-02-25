@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, NavController, ToastController } from '@ionic/angular';
 import { IncidenciesService } from 'src/app/services/incidence/incidencies.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Incidence } from 'src/app/models/incidence.model';
@@ -21,6 +21,7 @@ export class IncidentsPage implements OnInit {
   private incidenceService = inject(IncidenciesService);
   private authService = inject(AuthService);
   private employeeService = inject(EmployeeService);
+  private toastCtrl = inject(ToastController);
 
 
   isDeleteAlertOpen = false;
@@ -113,6 +114,7 @@ export class IncidentsPage implements OnInit {
 
     this.incidenceService.updateIncidence(this.editingIncident.id, { status: newStatus, description: newDescription }).subscribe({
       next: () => {
+        this.showToast('Incidencia actualizada con éxito', 'success'); 
         // Save to selected object
         this.selectedIncident!.status = newStatus;
         this.selectedIncident!.description = newDescription;        
@@ -128,7 +130,8 @@ export class IncidentsPage implements OnInit {
         this.editingIncident = null;
       },
       error: (err: any) => {
-        console.error('Error al guardar la incidencia', err);
+        this.showToast('Error al actualizar la incidencia', 'danger');
+        console.error('Error al actualizar la incidencia', err);
       }
     });
   }
@@ -136,6 +139,12 @@ export class IncidentsPage implements OnInit {
   logout() {
     this.authService.logout();
     this.navCtrl.navigateRoot('/login');
+  }
+
+    // --- HELPERS ---
+  private async showToast(message: string, color: string) {
+    const toast = await this.toastCtrl.create({ message, duration: 2000, color });
+    toast.present();
   }
 
   private loadIncidentEmployee() {

@@ -38,11 +38,17 @@ ion-content {
         ion-buttons {
             margin: 0;
         }
+    }
 
-        ion-back-button {
-            --color: var(--ion-blue-background); // Asegura que sea blanco/claro
-            margin: 0;
-        }
+    /* Estilo para botones de salida o atrás en el header */
+    .logout-btn {
+        --color: var(--ion-blue-background);
+        --padding-start: 8px;
+        --padding-end: 8px;
+        margin: 0;
+        height: 30px;
+        font-size: 1.5rem;
+        padding: 12px 0px;
     }
 
     &__unit-number {
