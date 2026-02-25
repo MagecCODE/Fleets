@@ -80,30 +80,23 @@ ion-content {
     --icon-color: var(--ion-blue-subtext);
     --color: var(--ion-blue-subtext);
     padding: 0;
-
-  &__new-incidence-button,
-  &__delete-button {
-    --border-radius: 12px;
-    --color: var(--ion-blue-background);
-    --box-shadow: none;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    height: 45px;
-    min-width: 130px;
-    margin: 15px 5px;
-  }
-
-  &__new-incidence-button {
-    --background: var(--ion-blue-highlight);
-    --color: var(--ion-blue-text);
-  }
-
-  &__delete-button {
-    --background: var(--ion-red-action);
-  }
 }
 
+/*
+  ng-ddp es necesario para sobreescribir los estilos de los 
+  botones ion-button dentro de inventory-actions, ya que sin esto no se 
+  aplican correctamente los estilos personalizados.
+
+    ::ng-deep .__new-incidence-button {
+    --background: var(--ion-blue-highlight) !important;
+    --color: var(--ion-blue-text)!important;
+  } 
+
+  ::ng-deep .__delete-button {
+    --background: var(--ion-red-action)!important;
+    --color: var(--ion-blue-background)!important;
+  }
+*/
 
 .inventory-table {
   border-radius: 15px;
@@ -162,16 +155,40 @@ ion-content {
 
 .inventory-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   padding: 0 10px;
   margin-top: 10px;
+
+    &__new-incidence-button,
+  &__delete-button {
+    --border-radius: 12px;
+    --box-shadow: none;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 45px;
+    min-width: 130px;
+    margin: 15px 5px;
+  }
+
+  &__new-incidence-button {
+    --background: var(--ion-blue-highlight) !important;
+    --color: var(--ion-blue-text)!important;
+  } 
+
+  &__delete-button {
+    --background: var(--ion-red-action)!important;
+    --color: var(--ion-blue-background)!important;
+  }
+
 }
 
 // Estilos de la paginación
 .inventory-pagination {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 10px 15px;
   margin-left: 10px;
   margin-top: -5px;
@@ -186,6 +203,7 @@ ion-content {
 
   &__buttons {
     display: flex;
+    justify-content: flex-start;
     gap: 10px;
   }
 
@@ -195,8 +213,6 @@ ion-content {
     font-weight: bold;
     font-size: 0.9rem;
     height: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
 
     &::part(native) {
       padding: 0 12px;

@@ -88,21 +88,21 @@
                             <ion-icon slot="icon-only" name="play-skip-forward-outline"></ion-icon>
                         </ion-button>
                     </div>
-                </div>
 
-                <!-- Dynamic Actions -->
-                <div class="inventory-actions">
-                    @if (showDeleteButton) {
-                    <ion-button class="inventory-page__delete-button" (click)="deleteItems()">
-                        <ion-icon slot="start" name="trash-outline"></ion-icon>
-                        Eliminar
-                    </ion-button>
-                    } @else {
-                    <ion-button class="inventory-page__new-incidence-button" (click)="addItem()">
-                        Añadir
-                    </ion-button>
-                    }
-                </div>
+                    <!-- Dynamic Actions -->
+                    <div class="inventory-actions">
+                        @if (showDeleteButton) {
+                        <ion-button class="inventory-actions__delete-button" (click)="deleteItems()">
+                            <ion-icon slot="start" name="trash-outline"></ion-icon>
+                            Eliminar
+                        </ion-button>
+                        } @else {
+                        <ion-button class="inventory-actions__new-incidence-button" (click)="addItem()">
+                            Añadir
+                        </ion-button>
+                        }
+                    </div>
+                </div>                
             </div>
         </ion-grid>
     </div>
