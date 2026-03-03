@@ -68,4 +68,3 @@ Aplicación Full-Stack diseñada para la gestión integral de flotas de vehícul
 
 - `/backend`: Servidor API y modelos de base de datos.
 - `/frontend`: Código fuente de la aplicación Ionic/Angular.
-- `Informe de análisis - Fleet.md`: Documentación detallada de la arquitectura del sistema.
